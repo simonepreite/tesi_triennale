@@ -12,16 +12,16 @@
 \usepackage[italian]{babel}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%libreria per accettare i caratteri
-                                        %   digitati da tastiera come è à
-                                        %   si può usare anche
+                                        %   digitati da tastiera come ï¿½ ï¿½
+                                        %   si puï¿½ usare anche
                                         %   \usepackage[T1]{fontenc}
-                                        %   però con questa libreria
+                                        %   perï¿½ con questa libreria
                                         %   il tempo di compilazione
                                         %   aumenta
 \usepackage{newlfont}
 \textwidth=450pt\oddsidemargin=0pt
-                        
-                                        
+
+
 \usepackage[latin1]{inputenc}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%libreria per impostare il documento
@@ -49,8 +49,8 @@
 \usepackage{amsthm}
 %
 \oddsidemargin=10pt \evensidemargin=20pt%impostano i margini
-\hyphenation{sil-la-ba-zio-ne pa-ren-te-si}%serve per la sillabazione: tra parentesi 
-					   %vanno inserite come nell'esempio le parole 
+\hyphenation{sil-la-ba-zio-ne pa-ren-te-si}%serve per la sillabazione: tra parentesi
+					   %vanno inserite come nell'esempio le parole
 %					   %che latex non riesce a tagliare nel modo giusto andando a capo.
 
 %
@@ -100,7 +100,7 @@ Simone Preite}}
 \vspace{20mm}
 \begin{center}
 {\large{\bf Sessione di Dicembre\\%inserire il numero della sessione in cui ci si laurea
-Anno Accademico 2016-2017}}%inserire l'anno accademico a cui si è iscritti
+Anno Accademico 2016-2017}}%inserire l'anno accademico a cui si ï¿½ iscritti
 \end{center}
 \end{titlepage}
 
@@ -141,10 +141,10 @@ INTRODUZIONE}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%aggiunge la voce Introduzione
                                         %   nell'indice
 \addcontentsline{toc}{chapter}{Introduzione}
-IoTh è un concetto che nasce dall'esigenza di astrarre una tecnologia obsoleta che è quella di voler interconnettere computer, o meglio interfacce di rete.\\
-L'evoluzione delle reti e l'avvento di IPv6 hanno permettono una migrazione verso un paradigma completamente ripensato che però si integra in maniera trasparente con il sistema attualmente in uso.\\
+IoTh ï¿½ un concetto che nasce dall'esigenza di astrarre una tecnologia obsoleta che ï¿½ quella di voler interconnettere computer, o meglio interfacce di rete.\\
+L'evoluzione delle reti e l'avvento di IPv6 hanno permettono una migrazione verso un paradigma completamente ripensato che perï¿½ si integra in maniera trasparente con il sistema attualmente in uso.\\
 L'idea \`e quindi quella di permettere ai processi di avere un proprio indirizzo ed essere quindi veri e propri endpoint su internet, tra le soluzioni \`e emersa quella di associare ad ogni processo il proprio stack di rete.\\
-Diversi sono i vantaggi derivanti dalla sopraesposta soluzione, per esempio la migrazione di un servizio su un altro host equivale ad interromperne l'esecuzione sulla macchina che lo ospita e rieseguirlo sulla nuova; questo manterebbe il suo indirizzo e quindi non si presenta la necessità di dover comunicare a chiunque lo utilizzi la variazione di indirizzo.
+Diversi sono i vantaggi derivanti dalla sopraesposta soluzione, per esempio la migrazione di un servizio su un altro host equivale ad interromperne l'esecuzione sulla macchina che lo ospita e rieseguirlo sulla nuova; questo manterebbe il suo indirizzo e quindi non si presenta la necessitï¿½ di dover comunicare a chiunque lo utilizzi la variazione di indirizzo.
 Un altro vantaggio \`e quello di non vicolnare il programmatore allo stack di rete di sistema, infatti esso pu\`o scegliere di usare, tra gli stack disponibili o creandone uno ex-novo, quello che pi\`u si addice alle sue esigenze.\\
 Per quanto riguarda la sicurezza invece il nuovo paradigma \`e intrinsecamente solido, avendo i processi il proprio stack di rete e quindi il proprio indirizzo i software di port mapping non riuscirebbero a carpire informazioni  sensibili sui servizi attivi in quanto riceverebbero solo la porta di default per quel servizio specifico senza considerare che quel servizio specifico avendo il proprio stack possono essere eseguti come utente non privilegiato e pertanto una vulnerabilit\`a di quest'ultimo non comprometterebbe l'intero sistema.\\
 Esistono gi\`a differenti implentazioni di stack di rete di questo genere, tra i pi\`u famosi abbiamo picoTCP, lwip e lwipv6; quest'ultimo nasce dal lavoro del team di Virtual Square labs come fork di lwip con l'obiettivo di fornirvi supporto ipv6. Con il tempo poi \`e diventato un progetto parallelo a se stante.\\
@@ -184,7 +184,7 @@ Ora vediamo un elenco numerato:         %crea un elenco numerato
 \end{enumerate}
 
 \begin{figure}[h]                       %crea l'ambiente figura; [h] sta
-                                        %   per here, cioè la figura va qui
+                                        %   per here, cioï¿½ la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
 %\includegraphics[width=5cm]{figura.eps}%inserisce una figura larga 5cm
@@ -244,8 +244,8 @@ $(3,1)$ & $(3,2)$ & $(3,3)$\\
 \begin{verbatim}
         In questo ambiente     posso scrivere      come voglio,
 lasciare gli spazi che voglio e non % commentare quando voglio
-e ci sarà scritto tutto.
-Quando lo uso è meglio che disattivi il Wrap del WinEdt
+e ci sarï¿½ scritto tutto.
+Quando lo uso ï¿½ meglio che disattivi il Wrap del WinEdt
 \end{verbatim}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
 
@@ -269,7 +269,7 @@ Ora vediamo un elenco numerato:         %crea un elenco numerato
 \end{enumerate}
 
 \begin{figure}[h]                       %crea l'ambiente figura; [h] sta
-                                        %   per here, cioè la figura va qui
+                                        %   per here, cioï¿½ la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
 %\includegraphics[width=5cm]{figura.eps}%inserisce una figura larga 5cm
@@ -329,8 +329,8 @@ $(3,1)$ & $(3,2)$ & $(3,3)$\\
 \begin{verbatim}
         In questo ambiente     posso scrivere      come voglio,
 lasciare gli spazi che voglio e non % commentare quando voglio
-e ci sarà scritto tutto.
-Quando lo uso è meglio che disattivi il Wrap del WinEdt
+e ci sarï¿½ scritto tutto.
+Quando lo uso ï¿½ meglio che disattivi il Wrap del WinEdt
 \end{verbatim}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
 \clearpage{\pagestyle{empty}\cleardoublepage}
@@ -353,7 +353,7 @@ Ora vediamo un elenco numerato:         %crea un elenco numerato
 \end{enumerate}
 
 \begin{figure}[h]                       %crea l'ambiente figura; [h] sta
-                                        %   per here, cioè la figura va qui
+                                        %   per here, cioï¿½ la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
 %\includegraphics[width=5cm]{figura.eps}%inserisce una figura larga 5cm
@@ -413,8 +413,8 @@ $(3,1)$ & $(3,2)$ & $(3,3)$\\
 \begin{verbatim}
         In questo ambiente     posso scrivere      come voglio,
 lasciare gli spazi che voglio e non % commentare quando voglio
-e ci sarà scritto tutto.
-Quando lo uso è meglio che disattivi il Wrap del WinEdt
+e ci sarï¿½ scritto tutto.
+Quando lo uso ï¿½ meglio che disattivi il Wrap del WinEdt
 \end{verbatim}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
 \clearpage{\pagestyle{empty}\cleardoublepage}
@@ -439,7 +439,7 @@ bibliografia: questo \`e il mio riferimento \cite{K3,K4}.
 \appendix                               %imposta le appendici
 \chapter{Prima Appendice}               %crea l'appendice
 In questa Appendice non si \`e utilizzato il comando:\\
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\verb"" è equivalente all'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\verb"" ï¿½ equivalente all'
                                         %   ambiente verbatim,
                                         %   ma si utilizza all'interno
                                         %   di un discorso.
@@ -461,13 +461,13 @@ alto.
 \addcontentsline{toc}{chapter}{Bibliografia}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%provare anche questo comando:
 %%%%%%%%%%%\addcontentsline{toc}{chapter}{\numberline{}{Bibliografia}}
-\bibitem{K1} Renzo Davoli. Internet of Threads. http://www.cs.unibo.it/~renzo/papers/2013.iciw.pdf, 2013
-\bibitem{K2} Renzo Davoli. Internet of Threads: Processes as Internet Nodes. http://www.cs.unibo.it/~renzo/papers/2014.IntTechIoTh.pdf, 2014
-\bibitem{K3} Renzo Davoli. Internet of Threads. http://www.cs.unibo.it/~renzo/papers/ConfGARR11\_SelectedPapers\_Davoli.pdf
-\bibitem{K4} Altran. picoTCP. https://github.com/tass-belgium/picotcp
-\bibitem{K5} Virtual Square Team. LWIPv6. http://wiki.v2.cs.unibo.it/wiki/index.php/LWIPV6
-\bibitem{K6} Virtual Square Team. UMview. http://wiki.v2.cs.unibo.it/wiki/index.php/UMview
-\bibitem{K7} Virtual Square Team. purelibc. http://wiki.virtualsquare.org/wiki/index.php/PureLibc
+\bibitem{K1} Renzo Davoli. Internet of Threads. http://www.cs.unibo.it/~renzo/papers/2013.iciw.pdf, 2013.
+\bibitem{K2} Renzo Davoli. Internet of Threads: Processes as Internet Nodes. http://www.cs.unibo.it/~renzo/papers/2014.IntTechIoTh.pdf, 2014.
+\bibitem{K3} Renzo Davoli. Internet of Threads. http://www.cs.unibo.it/~renzo/papers/ConfGARR11\_SelectedPapers\_Davoli.pdf.
+\bibitem{K4} Altran. picoTCP. https://github.com/tass-belgium/picotcp.
+\bibitem{K5} Virtual Square Team. LWIPv6. http://wiki.v2.cs.unibo.it/wiki/index.php/LWIPV6.
+\bibitem{K6} Virtual Square Team. UMview. http://wiki.v2.cs.unibo.it/wiki/index.php/UMview.
+\bibitem{K7} Virtual Square Team. purelibc. http://wiki.virtualsquare.org/wiki/index.php/PureLibc.
 \end{thebibliography}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
 \clearpage{\pagestyle{empty}\cleardoublepage}
