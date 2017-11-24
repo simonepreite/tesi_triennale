@@ -1,0 +1,36 @@
+
+
+\chapter*{Introduzione}                 %crea l'introduzione (un capitolo
+                                        %   non numerato)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%imposta l'intestazione di pagina
+\rhead[\fancyplain{}{\bfseries
+INTRODUZIONE}]{\fancyplain{}{\bfseries\thepage}}
+\lhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries
+INTRODUZIONE}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%aggiunge la voce Introduzione
+                                        %   nell'indice
+\addcontentsline{toc}{chapter}{Introduzione}
+
+Nell'ambito delle reti negli ultimi anni con l'avvento di internet si \`e assistito ad una crescita esponenziale delle apparecchiature connesse a questa rete.
+Fino ad oggi questa immensa rete \`e stata gestita per lo pi\`u attraverso indirizzamento delle interfacce di rete di cui i computer sono dotati.\\
+Al momento per\`o ci si trova a fare i conti con la carenza degli indirizzi e pian piano si procede verso una migrazione basata sul nuovo (ma non troppo) protocollo IPv6 che prevede uno spazio di indirizzamento molto pi\`u ampio che lascia spazio a nuove idee impraticabili con protocollo IPv4.\\
+In seguito sentiremo parlare di IoT (Internet of Things) ed IoTh (Internet of Threads), due paradigmi che possiamo affermare essere il risultato di un'evoluzione sempre crescente dei sistemi informativi.\\
+L'elaborato sarà strutturato in capitoli.\\
+Il primo di questi si premura di introdurre il lettore allo stato attuale dei protolli di rete e del paradigma IoTh; nel secondo capitolo verr\`a trattato il progetto VsnLib, ovvero la libreria oggetto della tesi; in fine il terzo capito si occuper\`a di descrivere alcuni esempi di utilizzo della stessa con immagini dimostrative ed istruzioni.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\tableofcontents                        %crea l'indice
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%imposta l'intestazione di pagina
+\rhead[\fancyplain{}{\bfseries\leftmark}]{\fancyplain{}{\bfseries\thepage}}
+\lhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries
+INDICE}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\listoffigures                          %crea l'elenco delle figure
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\listoftables                           %crea l'elenco delle tabelle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
+\clearpage{\pagestyle{empty}\cleardoublepage} 
+
