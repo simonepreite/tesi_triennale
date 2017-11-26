@@ -8,9 +8,23 @@ Questo concetto vuole rapprensentare la diffusione dei sistemi embedded come ver
 Ad un certo punto si \`e sentita l'esigenza di elevare questa astrazione, nasce il concetto di IoTh.\\
 L'idea diventa quella di avere processi come nodi di rete e non oggetti fisici, l'analogia \`e molto simile alla differenza tra telefoni fissi e telefoni cellulari, ovvero in passata era necessario pensare al luogo in cui una persona potesse trovarsi,, mentre attraverso l'assegnamento di un numero personale oggi possiamo comunicare direttamente con la persona desiderata\cite{K1,K2}.\\
 In termini di internet questo si traduce nella possibilit\`a di migrare servizi da un capo all'altro del mondo con la semplicit\`a di un kill and start.\\
+Come possiamo notare infatti, con questa tecnologia lo stack \`è direttamente integrato nel programma.
+\begin{figure}[h]
+\centering
+\begin{minipage}{.5\textwidth}
+\centering
+\includegraphics[width=7cm]{old_stack}
+\caption[physical interface stack]{stack associato\\ all'interfaccia fisica}\label{fig:fisical}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+\centering
+\includegraphics[width=7cm]{new_stack}
+\caption[virtual stack]{stack associato\\ ai processi}\label{fig:virtual}
+\end{minipage}
+\end{figure}\\
 Una nota va anche fatta in termini di sicurezza, ogni servizio pu\`o essere eseguito con il proprio stack di rete e questo impedirebbe a software di port mapping di carpire informazioni sulla macchina che ospita detto servizio. Inoltre possedendo il proprio stack di rete possiamo eseguire i processi con un utente non privilegiato e pertanto anche un bug del demone non comprometterebbe l'intero sistema.
 
-\section{Stack Famosi}
+\section{Stack Implementati}
 Diversi sono i progetti che si occupano di offrire ai processi il proprio stack di rete; tra questi ne verranno presi in esame tre, considerati pi\`u indicati per uno studio in quanto open source, Ognuno di essi offre la propria implementazione di stack di rete.\\
 Uno stack di rete legato al processo permette di connettere lo stesso ad una rete reale, tramite le interfacce fornite dal sistema, o virtuale (ad esempio VDE) come se fosse una macchina fisica a se stante, a questo punto ogni processo pu\`o staccarsi dal modo in cui la macchina che lo ospita gestisce la rete ed avere le proprie regole.\\
 
