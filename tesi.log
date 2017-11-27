@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.3)  27 NOV 2017 12:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.3)  27 NOV 2017 14:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -211,12 +211,8 @@ Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
 \verbatim@line=\toks30
 \verbatim@in@stream=\read1
 )) (./tesi.aux
-(./Intro.aux) (./IoTh.aux) (./VsnLib.aux
-
-LaTeX Warning: Label `fig:map' multiply defined.
-
-) (./Casi_duso.aux) (./Conclusioni.aux) (./Appendici.aux) (./Biblio.aux)
-(./Ringr.aux))
+(./Intro.aux) (./IoTh.aux) (./VsnLib.aux) (./Casi_duso.aux) (./Conclusioni.aux)
+(./Appendici.aux) (./Biblio.aux) (./Ringr.aux))
 \openout1 = `tesi.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
@@ -436,11 +432,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--12
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 14--15
-
- []
-
-
 Underfull \vbox (badness 2591) has occurred while \output is active []
 
  [9
@@ -448,18 +439,22 @@ Underfull \vbox (badness 2591) has occurred while \output is active []
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 17--21
+Underfull \hbox (badness 10000) in paragraph at lines 18--22
 
  []
 
 [10]
-<image/vsnlib_scheme.jpg, id=75, 933.4875pt x 680.5425pt>
+<image/vsnlib_scheme.jpg, id=76, 933.4875pt x 680.5425pt>
 File: image/vsnlib_scheme.jpg Graphic file (type jpg)
 <use image/vsnlib_scheme.jpg>
-Package pdftex.def Info: image/vsnlib_scheme.jpg  used on input line 33. on inp
-ut line 33.
-Package pdftex.def Info: Requested size: 426.79134pt x 311.14264pt on input lin
-e 33.
+Package pdftex.def Info: image/vsnlib_scheme.jpg  used on input line 34. on inp
+ut line 34.
+Package pdftex.def Info: Requested size: 455.24408pt x 331.89034pt on input lin
+e 34.
+
+Overfull \hbox (5.24408pt too wide) in paragraph at lines 34--39
+ [] 
+ []
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -546,27 +541,23 @@ Underfull \hbox (badness 1418) in paragraph at lines 16--17
 
 ] (./tesi.aux (./Intro.aux) (./IoTh.aux)
 (./VsnLib.aux) (./Casi_duso.aux) (./Conclusioni.aux) (./Appendici.aux)
-(./Biblio.aux) (./Ringr.aux))
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+(./Biblio.aux) (./Ringr.aux)) ) 
 Here is how much of TeX's memory you used:
  3738 strings out of 494879
  50688 string characters out of 6179360
- 117997 words of memory out of 5000000
+ 117958 words of memory out of 5000000
  6893 multiletter control sequences out of 15000+600000
  10856 words of font info for 44 fonts, out of 8000000 for 9000
  38 hyphenation exceptions out of 8191
  41i,10n,43p,790b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on tesi.pdf (33 pages, 266804 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on tesi.pdf (33 pages, 267016 bytes).
 PDF statistics:
  142 PDF objects out of 1000 (max. 8388607)
  95 compressed objects within 1 object stream

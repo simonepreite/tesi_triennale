@@ -12,6 +12,7 @@ Il progetto di creare questa libreria nasce proprio da questa esigenza, ovvero c
 \section{VnsLib}
 \subsection{Preambolo}
 Per configurare uno stack di rete programmi come ip generano un pacchetto netlink con le informazioni necessarie lo inviano al kernel che lo elabora esegue le operazioni e genera un messaggio di errore nel quale esiste un flag contenente il numero di errore generato (0 in caso di successo), a questo messaggio \`e associato un payload di risposta che pu\`o essere anche un feedback per l'utente che sta interagendo con il programma.\\
+VsnLib \`e un progetto in fase di sviluppo scritto in C e completamente opensource, liberamente scaricabile attraverso la piattaforma github al seguente link \url{https://github.com/simonepreite/vsnlib}.
 
 \subsection{Ambiente}
 La necessit\`a primaria era quella di catturare questi netlink e per farlo la strada era quella di intercettare la system call di invio della richiesta contenente appunto il payload, questo momento \`e quello in cui viene eseguita la sendto.\\
@@ -20,7 +21,7 @@ Il progetto inizialmente utilizzava come motore di cattura delle system call la 
 Il modulo in questione si chiama unrealvsnlib per analogia alla libreria ma ognuno potrebbe costruire un suo modulo a seconda di quello che intende controllare.\\
 
 \subsection{Core}
-La libreria risulta come uno strato di compatibilit\`a tra netlink e le specifiche configurazioni degli stack.\\
+La libreria costituisce uno strato  intermedio di compatibilit\`a tra netlink e le specifiche configurazioni degli stack.\\
 Vediamo come \`e composta:
 \begin{description}                     %crea un elenco descrittivo
   \item[VnsLib:] Il primo stato si occupa di inizializzare la libreria in base allo stack che si intende utilizzare, in questo modo possiamo caricare dinamicamente solo il modulo che ci interessa.
@@ -30,7 +31,7 @@ Vediamo come \`e composta:
                                         %   per here, cio� la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
-\includegraphics[width=15cm]{vsnlib_scheme}%inserisce una figura larga 5cm
+\includegraphics[width=16cm]{vsnlib_scheme}%inserisce una figura larga 5cm
                                         %se si vuole usare va scommentata
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%inserisce la legenda ed etichetta
@@ -38,6 +39,7 @@ Vediamo come \`e composta:
 \caption[mappa concettuale libreria]{mappa concettuale libreria}\label{fig:map}
 \end{center}
 \end{figure}
+
 \subsection{Moduli}
 La potenza dei moduli risiede nel fatto che chiunque abbia intenzione di costruire uno stack personalizzato, o di utilizzarne uno per il quale non esiste un modulo, pu\`o facilmente realizzare il proprio e la libreria si occuper\`a di farne il caricamento qualora fosse richiesto.
 \section{Sviluppi Futuri}
