@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.3)  26 NOV 2017 13:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.3)  27 NOV 2017 12:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2616,7 +2616,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.38 \caption
-             [mappa concettuale libreria]{mappa concettuale libreria}\label{...
+             [scambio di messaggi attraverso socket netlink]{comunicazione n...
 
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -2687,19 +2687,15 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.40 \end{figure}
-                 
+                 \\
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-
-Overfull \hbox (265.06828pt too wide) in paragraph at lines 33--41
-[]\OML/cmm/m/it/10 cheme\/cmr/m/n/10 [\OML/cmm/m/it/10 mappaconcettualelibreria
-\/cmr/m/n/10 ][][]$
- []
-
 ! Undefined control sequence.
-l.44 \subsection
+<recently read> \subsection 
+                            
+l.41 \subsection
                 {Moduli}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2945,7 +2941,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-l.46 \section
+l.43 \section
              {Sviluppi Futuri}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2968,17 +2964,18 @@ Missing character: There is no u in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no i in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 44--48
-[]
+Overfull \hbox (330.16536pt too wide) in paragraph at lines 33--45
+[]\OML/cmm/m/it/10 cheme\/cmr/m/n/10 [\OML/cmm/m/it/10 scambiodimessaggiattrave
+rsosocketnetlink\/cmr/m/n/10 ][][]$ 
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 44--48
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 33--45
 \/cmr/m/n/10 ^^Ro
  []
 
 
-Overfull \hbox (5.00002pt too wide) in paragraph at lines 44--48
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 33--45
 \/cmr/m/n/10 ^^Ra
  []
 
@@ -2990,7 +2987,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.48 \clearpage
+l.45 \clearpage
                {\pagestyle{empty}\cleardoublepage}
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -2998,9 +2995,9 @@ or  <return>  to continue without it.
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 ! Undefined control sequence.
-<write> \newlabel{fig:map}{{}{\thepage 
-                                       }}
-l.48 \clearpage
+<write> \newlabel{fig:netlink}{{}{\thepage 
+                                           }}
+l.45 \clearpage
                {\pagestyle{empty}\cleardoublepage}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3008,7 +3005,7 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-\newlabel{fig:map}{{}{}}
+\newlabel{fig:netlink}{{}{}}
 ])
 ! Emergency stop.
 <*> VsnLib.tex
@@ -3017,10 +3014,10 @@ and I'll forget about whatever was undefined.
 
  
 Here is how much of TeX's memory you used:
- 25 strings out of 494879
- 308 string characters out of 6179360
+ 26 strings out of 494879
+ 318 string characters out of 6179360
  48027 words of memory out of 5000000
- 3439 multiletter control sequences out of 15000+600000
+ 3440 multiletter control sequences out of 15000+600000
  3948 words of font info for 15 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  24i,5n,16p,493b,113s stack positions out of 5000i,500n,10000p,200000b,80000s

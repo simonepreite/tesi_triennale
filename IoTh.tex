@@ -31,14 +31,33 @@ Uno stack di rete legato al processo permette di connettere lo stesso ad una ret
 \subsection{PicoTCP}
 Supportato da Tass Belgium (Altran); \`e lo stack pi\`u conosciuto e diffuso per sistemi embedded ed esistono anche dei progetti basati su IP di reti mesh realizzati con picoTCP\footnote{http://www.picotcp.com/mesh-design-guide}.
 \subsection{LWIP}
-Nasce dal progetto di Adam Dunkels pensato per sistemi embedded ed inizialmente non forniva supporto ad IPv6.
+Nasce dal progetto di Adam Dunkels pensato per sistemi embedded ed inizialmente non forniva supporto ad IPv6.\\
+Light-weight IP vanta un core molto piccolo e la possibilit\`a di eseguire anche senza sistema oprativo (single-threaded) e con il minor consumo di RAM possibile, inoltre \`e modulare ed offre la possibilit\`a di aggiungere protocolli come DHCP e DNS solo in caso di necessit\`a.\\
+Supporta sia little che big endian e gira su processori a 8 e 32 bit, quindi funziona anche su un semplice ATMEGA.\\
+Unica pecca \`e il protoccolo IPv6 che \`e ancora in fase sperimentale, infatti il supporto IPv6 pu\`o essere aggiunto ed \`e scaricabile da git.
 \subsection{LWIPv6}
-Precedemente abbiamo fatto notare che LWIP non aveva supporto IPv6 ai suoi arbori, ed è questo uno dei motivi della nascita di LWIPv6.\\
+Precedemente abbiamo fatto notare che LWIP non aveva supporto IPv6 e che tutt'ora \`e ancora in fase sperimentale, ed è questo uno dei motivi della nascita di LWIPv6.\\
 Quando al team di virtual square \`e sopravvenuta la necessit\`a di avere uno stack per la rete vde non esisteva ancora nulla di maturo o comunque plug and play, da questa esigenza il team ha pensato di realizzare uno stack versatile in versione libreria tale per cui ogni processo potesse avere il proprio stack di rete.\\
-Caratteristica principale di LWIPv6 \`e il suo motore ibrido che, di fatto funziona solo con IPv6 e mappa in questo protocollo le comunicazioni IPv4 utilizzando una parte dell'indirizzo come flag di riconoscimento.
+Caratteristica principale di LWIPv6 \`e il suo motore ibrido che, di fatto funziona solo con IPv6 e mappa in questo protocollo le comunicazioni IPv4 utilizzando i primi 80 bit dell'indirizzo come flag di riconoscimento con tutti e 80 impostati a 1, ad esempio se volessimo rappresentare la maschera 255.255.255.0, che in esadecimale \`e equivalente a 0xffffff00 e la sua rappresentazione in IPv6 secondo LWIPv6 sar\`a la seguente 0xfffffff.ffffffff.ffffffff.ffffFFFF.ffffff00.
 \section{Netlink}
 Netlink \`e un sistema IPC (Inter Process Comunication) usato perch\`e in grado di mettere in comunicazione diversi task, solitamente serve per far comunicare task in user-space con task in kernel-space ma pu\`o far interagire anche processi entrambi in user-space.\\
-Studiato per essere il successore di ioctl per le configurazioni ed il monitoraggio, si propone di essere pi\`u flessibile
+Studiato per essere il successore di ioctl per le configurazioni ed il monitoraggio, si propone di essere pi\`u flessibile.
+Ma come avviene esattamente la comunicazione attraverso netlink?\\
+Netlink utilizza un sistema di socket indicizzato in base ai processi ogni processo pu\`o definire socket diversi di tipo netlink (AF\_NETLINK, NETLINK\_GENERIC, NETLINK\_XFRM) per inviare e ricevere messaggi con e da altri processi, implementa un sistema di porte basato sul process ID dei processi; ad esempio per la comunicazione con il kernel viene usata la porta 0.\\
+L'immagine successiva rende perfettamente il concetto, ed \`e una rielaborazione (per puri motivi stilistici) dell'immagine della documtazione di libnl. (reperibile qui\footnote{https://www.infradead.org/~tgr/libnl/doc/images//addressing.png})
+\begin{figure}[h]                       %crea l'ambiente figura; [h] sta
+                                        %   per here, cio� la figura va qui
+\begin{center}                          %centra nel mezzo della pagina
+                                        %   la figura
+\includegraphics[width=15cm]{netlink_comunication}%inserisce una figura larga 5cm
+                                        %se si vuole usare va scommentata
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%inserisce la legenda ed etichetta
+                                        %   la figura con \label{fig:prima}
+\caption[scambio di messaggi attraverso socket netlink]{comunicazione netlink}
+\end{center}
+\end{figure}
+L'interfaccia di comunicazione \`e abbastanza standardizzata ma personalizzabile a livello di payload, ognuno pu\`o definire una struttura personalizzata per poi usarla per comunicare attraverso i socket netlink con altri processi.
 \subsection{Inter Process Comunication}
 Molti processi necessitano di scambiare informazioni per i motivi pi\`u disparati, dalla comunicazion e di rete a quella interna ad una sola macchina.\\
 Viene da se pensare che costruire programmi che non interagiscono con il mondo esterno o con altri programmi sarebbe una risorsa limitata.\\
