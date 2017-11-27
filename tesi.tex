@@ -75,12 +75,19 @@
 %
 \begin{document}
 
+
+\newpage
+\null
+\thispagestyle{empty}
+\newpage
+
 \begin{titlepage}                       %crea un ambiente libero da vincoli
                                         %   di margini e grandezza caratteri:
                                         %   si pu\`o modificare quello che si
                                         %   vuole, tanto fuori da questo
                                         %   ambiente tutto viene ristabilito
 %
+
 \thispagestyle{empty}                   %elimina il numero della pagina
 \topmargin=6.5cm                        %imposta il margina superiore a 6.5cm
 \raggedleft                             %incolonna la scrittura a destra
@@ -90,14 +97,18 @@
 Questa \`e la \textsc{Dedica}:\\
 ognuno pu\`o scrivere quello che vuole, \\
 anche nulla \ldots                      %\ldots lascia tre puntini
-\newpage                                %va in una pagina nuova
+\end{titlepage}
+
+\newpage            
+\newpage
+
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage{\pagestyle{empty}\cleardoublepage}%non numera l'ultima pagina sinistra
-\end{titlepage}
 \pagenumbering{roman}                   %serve per mettere i numeri romani
 
 \include{Intro}
+
 \include{IoTh}
 \include{VsnLib}
 \include{Casi_duso}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.3)  27 NOV 2017 14:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.11.3)  27 NOV 2017 18:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -309,7 +309,7 @@ e
 ))
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+] [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 
 ]
@@ -374,14 +374,14 @@ Package Fancyhdr Warning: \headheight is too small (14.0pt):
 
  (./IoTh.tex
 Capitolo 1.
-<image/old_stack.jpg, id=38, 258.9675pt x 432.11438pt>
+<image/old_stack.jpg, id=41, 258.9675pt x 432.11438pt>
 File: image/old_stack.jpg Graphic file (type jpg)
 <use image/old_stack.jpg>
 Package pdftex.def Info: image/old_stack.jpg  used on input line 16. on input l
 ine 16.
 Package pdftex.def Info: Requested size: 199.16928pt x 332.34666pt on input lin
 e 16.
-<image/new_stack.jpg, id=39, 339.2675pt x 570.13pt>
+<image/new_stack.jpg, id=42, 339.2675pt x 570.13pt>
 File: image/new_stack.jpg Graphic file (type jpg)
 <use image/new_stack.jpg>
 Package pdftex.def Info: image/new_stack.jpg  used on input line 21. on input l
@@ -403,22 +403,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 28--30
 
  []
 
-[3]
-<image/netlink_comunication.jpg, id=52, 662.475pt x 365.365pt>
+
+Underfull \vbox (badness 1117) has occurred while \output is active []
+
+ [3]
+[4]
+<image/netlink_comunication.jpg, id=58, 662.475pt x 365.365pt>
 File: image/netlink_comunication.jpg Graphic file (type jpg)
 <use image/netlink_comunication.jpg>
-Package pdftex.def Info: image/netlink_comunication.jpg  used on input line 52.
- on input line 52.
+Package pdftex.def Info: image/netlink_comunication.jpg  used on input line 58.
+ on input line 58.
 Package pdftex.def Info: Requested size: 426.79134pt x 235.38264pt on input lin
-e 52.
-
-Underfull \vbox (badness 4556) has occurred while \output is active []
-
- [4]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[5] [6 <./image/netlink_comunication.jpg>] [7] [8
+e 58.
+ [5] [6 <./image/netlink_comunication.jpg>] [7] [8
 
 
 ])
@@ -444,7 +441,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 18--22
  []
 
 [10]
-<image/vsnlib_scheme.jpg, id=76, 933.4875pt x 680.5425pt>
+<image/vsnlib_scheme.jpg, id=79, 933.4875pt x 680.5425pt>
 File: image/vsnlib_scheme.jpg Graphic file (type jpg)
 <use image/vsnlib_scheme.jpg>
 Package pdftex.def Info: image/vsnlib_scheme.jpg  used on input line 34. on inp
@@ -459,44 +456,51 @@ Overfull \hbox (5.24408pt too wide) in paragraph at lines 34--39
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[11] [12 <./image/vsnlib_scheme.jpg>])
+[11]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [12 <./image/vsnlib_scheme.jpg>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [13]
+[14])
 \openout2 = `Casi_duso.aux'.
 
  (./Casi_duso.tex
 Capitolo 3.
-[13
+[15
 
 
 
 
 
-] [14
+] [16
 
 
 ])
 \openout2 = `Conclusioni.aux'.
 
- (./Conclusioni.tex) [15
+ (./Conclusioni.tex) [17
 
 
 
 ]
 \openout2 = `Appendici.aux'.
 
- (./Appendici.tex [16
+ (./Appendici.tex [18
 
 
 
 ]
 Appendice A.
-[17] [18
+[19] [20
 
 ]
 Appendice B.
-) [19]
+) [21]
 \openout2 = `Biblio.aux'.
 
- (./Biblio.tex [20
+ (./Biblio.tex [22
 
 
 
@@ -530,10 +534,10 @@ Underfull \hbox (badness 1418) in paragraph at lines 16--17
  / wiki . v2 . cs . unibo . it /
  []
 
-[21] [22])
+[23] [24])
 \openout2 = `Ringr.aux'.
 
- (./Ringr.tex) [23
+ (./Ringr.tex) [25
 
 
 
@@ -543,13 +547,13 @@ Underfull \hbox (badness 1418) in paragraph at lines 16--17
 (./VsnLib.aux) (./Casi_duso.aux) (./Conclusioni.aux) (./Appendici.aux)
 (./Biblio.aux) (./Ringr.aux)) ) 
 Here is how much of TeX's memory you used:
- 3738 strings out of 494879
- 50688 string characters out of 6179360
- 117958 words of memory out of 5000000
- 6893 multiletter control sequences out of 15000+600000
+ 3736 strings out of 494879
+ 50666 string characters out of 6179360
+ 116958 words of memory out of 5000000
+ 6891 multiletter control sequences out of 15000+600000
  10856 words of font info for 44 fonts, out of 8000000 for 9000
  38 hyphenation exceptions out of 8191
- 41i,10n,43p,790b,329s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,10n,43p,790b,287s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
@@ -557,10 +561,10 @@ cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
 2.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on tesi.pdf (33 pages, 267016 bytes).
+Output written on tesi.pdf (36 pages, 270043 bytes).
 PDF statistics:
- 142 PDF objects out of 1000 (max. 8388607)
- 95 compressed objects within 1 object stream
+ 152 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
