@@ -2,12 +2,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%imposta l'intestazione di pagina
 \lhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries\rightmark}}
 \pagenumbering{arabic}                  %mette i numeri arabi
-\section{Paradigma}                 %crea la sezione
-IoT (Internet of Things), ovvero l'internet delle cose.\\
-Questo concetto vuole rapprensentare la diffusione dei sistemi embedded come veri e propri nodi di rete, possiamo definirlo il precursore del sistema che stiamo per descrivere ed \`e il sistema che ad oggi ha permesso di incontrare il nostro condizionatore o la nostra caldaia, ma addirittura il nostro tostapane, in rete.\\
-Ad un certo punto si \`e sentita l'esigenza di elevare questa astrazione, nasce il concetto di IoTh.\\
-L'idea diventa quella di avere processi come nodi di rete e non oggetti fisici, l'analogia \`e molto simile alla differenza tra telefoni fissi e telefoni cellulari, ovvero in passato era necessario pensare al luogo in cui una persona potesse trovarsi, mentre attraverso l'assegnamento di un numero personale oggi possiamo comunicare direttamente con la persona desiderata\cite{K1,K2}.\\
-In termini di internet questo si traduce nella possibilit\`a di migrare servizi da un capo all'altro del mondo con la semplicit\`a di un kill and start.\\
+\section{Definizione}                 %crea la sezione
+L'internet of things, ovvero l'internet delle cose, vuole rappresentare la diffusione dei sistemi embedded come veri e propri nodi di reti. Nell'ottica dell'IoT, oggi, apparecchi comununi in un'abitazione, quali condizionatore, la caldaia o addirittura il tostapane, possono essere nodi di rete ed essere quindi configurati e controllati attraverso di essa.\\
+Il concetto di internet of threads \`e una evoluzione di questa astrazione. L'idea alla base di IoTh \`e quella di avere non solo oggetti ma anche processi come nodi di rete.\\
+Per poter capire pienamente i vantaggi dell'IoTh si pu\`o pensare ad un'analogia con quanto \`e successo nel mondo della telefonia. In passato la telefonia collegava apparecchi fissi collegati via cavo, in questo modello il numero di telefono individuava un luogo e non una persona e quindi era comunque, per trovare una persona, doversi interrogare sul dove questa potesse essere; al contrario l'avvento dei telefoni cellulari ha cambiato l'idea di significato di numero di telefono, non pi\`u associato a luoghi fisici ma ad una persona infatti i telefoni cellulari sono normalmente telefoni personali\cite{K1,K2}.\\
 Come possiamo notare infatti, con questa tecnologia lo stack \`e direttamente integrato nel programma.
 \begin{figure}[h]
 \centering
@@ -22,7 +20,8 @@ Come possiamo notare infatti, con questa tecnologia lo stack \`e direttamente in
 \caption[virtual stack]{stack associato\\ ai processi}\label{fig:virtual}
 \end{minipage}
 \end{figure}\\
-Una nota va anche fatta in termini di sicurezza, ogni servizio pu\`o essere eseguito con il proprio stack di rete e questo impedirebbe a software di port mapping di carpire informazioni sulla macchina che ospita detto servizio. Inoltre possedendo il proprio stack di rete possiamo eseguire i processi con un utente non privilegiato e pertanto anche un bug del demone non comprometterebbe l'intero sistema.
+Nello stesso modo IoTh indirizza i processi che forniscono un servizio, questo significa che questi processi non sono pi\`u vincolati a risiedere in un luogo specifico, in un elaboratore specifico nell'ambito delle reti, ma \`e possibile trasparentemente farli migrare da un elaboratore all'altro senza che questo crei difficolt\`a di indirizzamento.\\
+Una nota va anche fatta in termini di sicurezza. La possibilit\`a che ogni servizio utilizzi propri indirizzi IP e uno stack di rete privato rende molto pi\`u difficile se non praticamente impossibile sfruttare le fragilit\`a di un servizio per poter scalare l'intrusione ad altri servizi presenti sullo stesso sistema.
 
 \section{Stack Implementati}
 Diversi sono i progetti che si occupano di offrire ai processi il proprio stack di rete; tra questi ne verranno presi in esame tre, considerati pi\`u indicati per uno studio in quanto open source, Ognuno di essi offre la propria implementazione di stack di rete.\\
@@ -32,17 +31,17 @@ Uno stack di rete legato al processo permette di connettere lo stesso ad una ret
 Supportato da Tass Belgium (Altran); \`e lo stack pi\`u conosciuto e diffuso per sistemi embedded ed esistono anche dei progetti basati su IP di reti mesh realizzati con picoTCP\footnote{http://www.picotcp.com/mesh-design-guide}.\\
 Purtroppo per motivi commerciali alcune parti del codice non sono state rese pubbliche anche se rappresentano una piccola percentuale dell'intero progetto.
 \subsection{LWIP}
-Nasce dal progetto di Adam Dunkels pensato per sistemi embedded ed inizialmente non forniva supporto ad IPv6.\\
-Light-weight IP vanta un core molto piccolo e la possibilit\`a di eseguire anche senza sistema oprativo (single-threaded) e con il minor consumo di RAM possibile, inoltre \`e modulare ed offre la possibilit\`a di aggiungere protocolli come DHCP e DNS solo in caso di necessit\`a.\\
+Nasce come progetto di Adam Dunkels pensato per sistemi embedded ed inizialmente non forniva supporto ad IPv6.\\
+Light-weight IP (LWIP) vanta un core molto piccolo e la possibilit\`a di eseguire anche senza sistema oprativo (single-threaded) e con il minor consumo di RAM possibile, inoltre \`e modulare ed offre la possibilit\`a di aggiungere protocolli come DHCP e DNS solo in caso di necessit\`a.\\
 Supporta sia little che big endian e gira su processori a 8 e 32 bit, quindi funziona anche su un semplice ATMEGA.\\
 Unica pecca \`e il protoccolo IPv6 che \`e ancora in fase sperimentale, infatti il supporto IPv6 pu\`o essere aggiunto ed \`e scaricabile da git.
 \subsection{LWIPv6}
-Precedemente abbiamo fatto notare che LWIP non aveva supporto IPv6 e che tutt'ora \`e ancora in fase sperimentale, ed \`e questo uno dei motivi della nascita di LWIPv6.\\
-Quando al team di virtual square \`e sopravvenuta la necessit\`a di avere uno stack per la rete vde non esisteva ancora nulla di maturo o comunque plug and play, da questa esigenza il team ha pensato di realizzare uno stack versatile in versione libreria tale per cui ogni processo potesse avere il proprio stack di rete.\\
-Caratteristica principale di LWIPv6 \`e il suo motore ibrido che, di fatto funziona solo con IPv6 e mappa in questo protocollo le comunicazioni IPv4 utilizzando i primi 80 bit dell'indirizzo come flag di riconoscimento con tutti e 80 impostati a 1, ad esempio se volessimo rappresentare la maschera 255.255.255.0, che in esadecimale \`e equivalente a 0xffffff00 e la sua rappresentazione in IPv6 secondo LWIPv6 sar\`a la seguente 0xfffffff.ffffffff.ffffffff.ffffFFFF.ffffff00.
+Precedemente si \`e notato che LWIP non aveva supporto IPv6 e che tutt'ora \`e ancora in fase sperimentale, ed \`e questo uno dei motivi della nascita di LWIPv6.\\
+Quando al team di virtualsquare \`e sopravvenuta la necessit\`a di avere uno stack per la rete vde non esisteva ancora nulla di maturo o comunque plug and play, da questa esigenza il team ha pensato di realizzare uno stack versatile in versione libreria tale per cui ogni processo potesse avere il proprio stack di rete.\\
+Caratteristica principale di LWIPv6 \`e il suo motore ibrido che, di fatto funziona solo con IPv6 e mappa in questo protocollo le comunicazioni IPv4 utilizzando i primi 80 bit dell'indirizzo come flag di riconoscimento con tutti e 80 impostati a 1, ad esempio se volessimo rappresentare la maschera 255.255.255.0, che in esadecimale \`e equivalente a 0xffffff00 e la sua rappresentazione in IPv6 secondo LWIPv6 sar\`a la seguente 0xfffffff.ffffffff.ffffFFFF.ffffff00.
 \section{Netlink}
-\subsection{Inter Process Comunication}
-Molti processi necessitano di scambiare informazioni per i motivi pi\`u disparati, dalla comunicazion e di rete a quella interna ad una sola macchina.\\
+\subsection{Inter Process Communication}
+Molti processi necessitano di scambiare informazioni per i motivi pi\`u disparati, dalla comunicazione di rete a quella interna ad una sola macchina.\\
 Viene da se pensare che costruire programmi che non interagiscono con il mondo esterno o con altri programmi sarebbe una risorsa limitata.\\
 Con IPC intendiamo quindi l'insieme delle tecnologie adottate per permettere ai processi di comunicare tra essi, che siano ospitati sulla stessa macchina o distribuiti sulla rete, tra queste tecnologie esiste appunto quella utilizzata all'interno della libreria oggetto di questo elaborato.
 \subsection{Il Sistema IPC Netlink}
@@ -75,4 +74,4 @@ Netlink Protocol Library Suite (libnl), \`e una raccolta di librerie ed utility 
 \end{description}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
 
-\clearpage{\pagestyle{empty}\cleardoublepage} 
+\clearpage{\pagestyle{empty}\cleardoublepage}
