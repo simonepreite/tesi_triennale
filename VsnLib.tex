@@ -3,29 +3,30 @@
 \chapter{VsnLib}                %crea il capitolo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%imposta l'intestazione di pagina
 \lhead[\fancyplain{}{\bfseries\thepage}]{\fancyplain{}{\bfseries\rightmark}}
-Strato di compatibilit\`a tra pacchetti netlink e stack di rete virtuali.
-
+Interfaccia di configurazione degli stack di rete attraverso l'utilizzo di tecnologia netlink.
 \section{Il Progetto}                 %crea la sezione
 Gli stack analizzati in precedenza offrono a grandi linee la stessa tipologia di servizio seppur ognuna con le proprie caratteristice.\\
-Nessuno dei progetti ha per\`o tenuto in considerazione l'idea di utilizzare un'interfaccia di configurazione che fosse standard e pertanto \`e necessario usare le funzioni specifiche per ognuno di questi progetti, costringendo il programmatore a cambiare modalit\`a di interazione da stack a stack.\\
-Il progetto di creare questa libreria nasce proprio da questa esigenza, ovvero cercare di uniformare le interfacce di comunicazione in modo tale che l'utente non sia costretto ad adattarsi ogni qual volta decida di cambiare stack.\\
+Nessuno dei progetti ha per\`o tenuto in considerazione l'idea di utilizzare un'interfaccia di configurazione che fosse standard, \`e pertanto necessario usare le funzioni specifiche per ognuno di questi progetti, costringendo il programmatore a cambiare modalit\`a di interazione da stack a stack.\\
+L'idea di creare questa libreria nasce proprio dall' esigenza di uniformare le interfacce di comunicazione in modo tale che l'utente non sia costretto ad adattarsi ogni qual volta decida di cambiare stack.\\
 \section{VnsLib}
 \subsection{Preambolo}
-Per configurare uno stack di rete programmi come ip generano un pacchetto netlink con le informazioni necessarie lo inviano al kernel che lo elabora esegue le operazioni e genera un messaggio di errore nel quale esiste un flag contenente il numero di errore generato (0 in caso di successo), a questo messaggio \`e associato un payload di risposta che pu\`o essere usato per generare un feedback da mostrare all'utente che sta interagendo con il programma.\\
+Per configurare uno stack di rete programmi come ip generano un pacchetto netlink con le informazioni necessarie lo inviano al kernel che lo elabora, esegue le operazioni e genera un messaggio di errore contenente un flag attraverso il quale viene comunicato il numero di errore generato (0 in caso di successo). A questo messaggio \`e associato un payload di risposta generalmente usato per comporre un feedback da mostrare all'utente che sta interagendo con il programma.\\
 VsnLib \`e un progetto in fase di sviluppo scritto in C e completamente opensource, liberamente scaricabile attraverso la piattaforma github al seguente link \url{https://github.com/simonepreite/vsnlib}.
 
 \subsection{Ambiente}
 La necessit\`a primaria era quella di catturare queste comunicazioni netlink e per farlo la strada era quella di intercettare la system call di invio della richiesta contenente appunto il payload, questo momento \`e quello in cui viene eseguita la sendto.\\
 In questo punto interviene la nostra libreria, che si interpone e di fatto fa le veci del kernel, al quale il pacchetto netlink non arriver\`a mai realmente.\\
-Il progetto inizialmente utilizzava come motore di cattura delle system call la libreria purelibc\footnote{http://wiki.virtualsquare.org/wiki/index.php/PureLibc}, in seguito per\`o si \`e giunti alla conclusione che costruire un modulo ad hoc all'interno del sistema vuos fosse un'alternativa pi\`u versatile, immediata e pulita, inoltre vuos ha un sistema di debug built in che rende pi\`u semplice l'individuazione dei problemi legati allo sviluppo.\\
-Vuos \`e un progetto nato all'interno del team di sviluppo di virtual square, ha come obiettivo quello di virtualizzare parti del sistema operativo lasciando all'utilizzatore la scelta di cosa virtualizzare e cosa no. \`E completamente open source e viene rilasciato sotto licenza GPL, \`e scaricabile attraverso il repo su github \url{https://github.com/virtualsquare/vuos} nella versione pura che non comprende il modulo sperimentale unrealvsn, questa versione invece \`e reperibile al seguente link  \url{https://github.com/simonepreite/vuos}.
+In partenza VsnLib utilizzava come motore di cattura delle system call la libreria purelibc\cite{K8}, in seguito per\`o si \`e giunti alla conclusione che costruire un modulo ad hoc all'interno del sistema vuos fosse un'alternativa pi\`u versatile, immediata e pulita, inoltre vuos ha un sistema di debug built in che rende pi\`u semplice l'individuazione dei problemi legati allo sviluppo.\\
+Vuos\cite{K5} \`e un progetto di virtualsquare, ha come obiettivo quello di virtualizzare parti del sistema operativo senza negare all'utilizzatore la scelta degli elementi da virtualizzare, \`e costruito con un sistema di moduli che possono essere aggiunti a discrezione dell'utente.\\
+La versione di sviluppo ufficiale \`e liberamente scaricabile attraverso la piattaforma github al seguente link \url{https://github.com/virtualsquare/vuos}. \\
+Per il testing \`e stato creato un fork di vuos contenente il modulo relativo alla cattura delle system call interessanti per il progetto, anche questa versione risiede su github \url{https://github.com/simonepreite/vuos}.\\
 Il modulo in questione si chiama unrealvsnlib per analogia alla libreria ma ognuno potrebbe costruire un suo modulo a seconda di quello che intende controllare.\\
 
 \subsection{Core}
 La libreria costituisce uno strato  intermedio di compatibilit\`a tra netlink e le specifiche configurazioni degli stack.\\
 Vediamo come \`e composta:
 \begin{description}                     %crea un elenco descrittivo
-  \item[VnsLib:] Il primo stato si occupa di inizializzare la libreria in base allo stack che si intende utilizzare, in questo modo possiamo caricare dinamicamente solo il modulo che ci interessa.
+  \item[VnsLib:] Il primo strato si occupa di inizializzare la libreria in base allo stack che si intende utilizzare, in questo modo possiamo caricare dinamicamente solo il modulo che ci interessa.
   \item[Modules:] Sono la parte specifica della libreria, essi contengono l'intestazione delle funzioni generiche che si occupano di chiamare quelle particolari per ogni stack.
 \end{description}
 \begin{figure}[h]                       %crea l'ambiente figura; [h] sta
@@ -42,17 +43,20 @@ Vediamo come \`e composta:
 \end{figure}
 \subsection{VnsLib}
 Espone le interfacce di comunicazione della libreria, che di fatto sono due, una per inizializzare l'ambiente ed una per inviare il pacchetto da gestire.\\
-L'utente non ha accesso ad altre funzioni perch\`e \`e la libreria stessa ad analizzare il pacchetto, riempire i campi della struttura generica ed inviarlo al modulo relatvo allo stack.\\
-Di ritorno si ricever\`a una struttura che permetter\`a la costruzione del paccehetto netlink di risposta alla recv del programma, questo \`e l'ultimo compito della nostra libreria.
+L'utente non ha accesso ad altre funzioni perch\`e \`e la libreria stessa ad analizzare il pacchetto, riempire i campi della struttura generica ed inviarlo al modulo relspecifico dello stack.\\
+In risposta si ricever\`a una struttura adatta alla costruzione del paccehetto netlink da spedire alla system call recvfrom del programma in attesa, questo \`e l'ultimo compito della nostra libreria.
 \subsection{Moduli}
-La potenza dei moduli risiede nel fatto che chiunque abbia intenzione di costruire uno stack personalizzato, o di utilizzarne uno per il quale non esiste un modulo, pu\`o facilmente realizzare il proprio e la libreria si occuper\`a di farne il caricamento qualora fosse richiesto.
-Ogni modulo, infatti, ha la stessa struttura e contiene una funzioni generiche comuni in tutti gli stack. I prototipi di queste funzioni hanno in comune la desinenza che serve a specificare l'azione da compiere, mentre a distinguerle \`e la radice che prende il nome dello stack, pertanto ogni modulo \`e composto dallo stesso numero di funzioni che si occupano mediare la comunicazione tra la libreria e il vero stack. Questa mediazione non \`e particolarmente complessa da comprendere in quanto si tratta di una semplice sequenza di chiamate alle funzioni specifiche dello stack per realizzare l'azione della richiesta.\\
-Per generalizzare la libreria si \`e usata una tecnica di puntatori a funzione, in questo modo possiamo evitare di specificare il nome completo delle funzioni che, come gi\`a accennato si differenziano per nome. Allora l'idea \`e stata quella di inizializzare, in fase di caricamento della libreria (che avviene con dlopen), proprio un array di puntatori a funzione (attraverso dlsym) in modo tale da poter effettuare le chiamate attraverso di esso. Questo sistema ci permette di caricare dinamicamente solo il modulo di cui si necessita.\\
-Ogni funzione riceve lo stesso tipo di struttura e dopo aver raccolto i risultati delle funzioni specifiche dello stack riempie i campi utili a formare la struttura di risposta che poi sar\`a ritornata alla libreria per elaborare il pacchetto netlink di risposta.
+La presenza di moduli per gestire i vari stack lascia la libert\`a a chiunque necessiti di uno stack non supportato, o personalizzato, di creare il proprio modulo rispettando le specifiche della libreria.\\
+Ogni modulo, infatti, ha la stessa struttura e contiene una funzioni generiche comuni in tutti gli stack. I prototipi di queste funzioni hanno in comune la desinenza che serve a specificare l'azione da compiere, mentre a distinguerle \`e la radice che prende il nome dello stack.
+\\ codice di esempio \\
+In breve ogni modulo \`e composto dallo stesso numero di funzioni che si occupano di mediare la comunicazione tra la libreria e il vero stack.
+In ognuna delle funzioni risiedono le chiamate specifiche dello stack utili per completare l'operazione richiesta dal pacchetto netlink.\\
+Grazie alla tecnica dei puntatori a funzione, si riesce ad essere abbastanza generali e possiamo evitare di specificare il nome completo delle funzioni. Allora l'idea \`e stata quella di inizializzare, in fase di caricamento della libreria (che avviene con dlopen), un array di puntatori a funzione (attraverso dlsym) in modo tale da poter effettuare le chiamate attraverso di esso. Dlopen e dlsym permettono di caricare dinamicamente solo il modulo di cui si necessita.\\
+All' interno dei moduli le funzioni ricevono in input lo stesso tipo di struttura. Durante l'esecuzione di un'azione loro compito \`e la raccola di informazioni dalle funzioni reali dello stack che verranno poi usate per riempire i campi della struttura di risposta chapter a sua volta servir\`a a creare il payload per il pacchetto netlink di risposta.
 \section{Sviluppi Futuri}
 In fase di progettazione non sono stati posti limiti alla crescita del progetto e la sua modularit\`a \`e legata principalmente a questo aspetto.\\
 L'augurio \`e che questo progetto continui a crescere arricchendosi di funzionalit\`a.\\
 In questa fase ci si \`e occupati delle configurazioni e del routing che deve essere completata e testata prima di poter affermarne la stabilit\`a.\\
 Tra le varie ipotesi di proseguimento c'\`e quella di gestione del filtering ovvero occuparsi di tutta la parte riguardante le iptables.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
-\clearpage{\pagestyle{empty}\cleardoublepage} 
+\clearpage{\pagestyle{empty}\cleardoublepage}
