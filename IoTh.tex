@@ -8,18 +8,21 @@ Il concetto di Internet of Threads \`e una evoluzione di questa astrazione. L'id
 Per poter capire pienamente i vantaggi dell'IoTh si pu\`o pensare ad un'analogia con quanto \`e successo nel mondo della telefonia. In passato la telefonia collegava apparecchi fissi connessi via cavo. In questo modello il numero di telefono individuava un luogo e non una persona e quindi era comune, per trovare una persona, doversi interrogare sul dove questa potesse essere; al contrario l'avvento dei telefoni cellulari ha cambiato l'idea di significato di numero di telefono, non pi\`u associato a luoghi fisici ma ad una persona infatti i telefoni cellulari sono normalmente telefoni personali\cite{K1,K2}.\\
 Come possiamo notare infatti, con questa tecnologia lo stack \`e direttamente integrato nel programma.
 \begin{figure}[h]
-\centering
-\begin{minipage}{.5\textwidth}
-\centering
-\includegraphics[width=7cm]{old_stack}
-\caption[physical interface stack]{stack associato\\ all'interfaccia fisica}\label{fig:fisical}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-\centering
-\includegraphics[width=7cm]{new_stack}
-\caption[virtual stack]{stack associato\\ ai processi}\label{fig:virtual}
-\end{minipage}
-\end{figure}\\
+     \begin{center}%
+        \subfigure[stack associato all'interfaccia fisica]{%
+            \label{fig:physical}
+            \includegraphics[width=7cm]{old_stack}
+        }%
+        \subfigure[stack associato ai processi]{%
+           \label{fig:virtual}
+           \includegraphics[width=7cm]{new_stack}
+        }
+%
+    \end{center}
+    \caption{%
+        Differenze tra stack reali e virtuali
+     }%
+\end{figure}%\
 Nello stesso modo IoTh indirizza i processi che forniscono un servizio, significa che questi processi non sono pi\`u vincolati a risiedere in un luogo specifico, o in un elaboratore specifico nell'ambito delle reti, ma \`e possibile trasparentemente farli migrare da un elaboratore all'altro senza che questo crei difficolt\`a di indirizzamento.\\
 Una nota va anche fatta in termini di sicurezza. La possibilit\`a che ogni servizio utilizzi propri indirizzi IP e uno stack di rete privato rende molto pi\`u difficile se non praticamente impossibile sfruttare le fragilit\`a di un servizio per poter scalare l'intrusione ad altri servizi presenti su di esso.
 
@@ -107,7 +110,18 @@ L'immagine successiva rende perfettamente il concetto.
 \end{center}
 \end{figure}\\
 L'interfaccia di comunicazione \`e abbastanza standardizzata ma il payload \`e personalizzabile ed \`e possibile definire la propria struttura da utilizzare per inviare dati (informazioni), tra processi diversi, attraverso i socket netlink.
-\\ inserire struttura header netlink \\
+\begin{figure}[h]                       %crea l'ambiente figura; [h] sta
+                                        %   per here, cio� la figura va qui
+\begin{center}                          %centra nel mezzo della pagina
+                                        %   la figura
+\includegraphics[width=8cm]{nlmsghdr}%inserisce una figura larga 5cm
+                                        %se si vuole usare va scommentata
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%inserisce la legenda ed etichetta
+                                        %   la figura con \label{fig:prima}
+\caption[struct nlmsghdr]{schema della struttura nlmsghdr}
+\end{center}
+\end{figure}\\
 \subsection{Libnl}
 Netlink Protocol Library Suite (libnl) \cite{K10}, \`e una raccolta di librerie ed utility che forniscono API di comunicazione netlink basate su quelle del kernel linux e comprende:
 \begin{description}                     %crea un elenco descrittivo
