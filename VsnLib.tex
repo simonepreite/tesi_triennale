@@ -15,14 +15,14 @@ Per configurare uno stack di rete programmi come ip generano un pacchetto netlin
                                         %   per here, cio� la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
-\includegraphics[width=8cm]{nlmsgerror}%inserisce una figura larga 5cm
+\includegraphics[width=10cm]{nlmsgerror}%inserisce una figura larga 5cm
                                         %se si vuole usare va scommentata
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%inserisce la legenda ed etichetta
                                         %   la figura con \label{fig:prima}
 \caption[struct nlmserror]{schema della struttura per il messaggio di risposta}
 \end{center}
-\end{figure}\\
+\end{figure}
 VsnLib \`e un progetto in fase di sviluppo scritto in C e completamente opensource, liberamente scaricabile attraverso la piattaforma github al seguente link \url{https://github.com/simonepreite/vsnlib}.
 
 \subsection{Ambiente}
@@ -45,7 +45,7 @@ Vediamo come \`e composta:
                                         %   per here, cio� la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
-\includegraphics[width=16cm]{vsnlib_scheme}%inserisce una figura larga 5cm
+\includegraphics[width=14cm]{vsnlib_scheme}%inserisce una figura larga 5cm
                                         %se si vuole usare va scommentata
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%inserisce la legenda ed etichetta
@@ -55,20 +55,45 @@ Vediamo come \`e composta:
 \end{figure}
 \subsection{VnsLib}
 Espone le interfacce di comunicazione della libreria, che di fatto sono due, una per inizializzare l'ambiente ed una per inviare il pacchetto da gestire.\\
+\begin{lstlisting}[style=CStyle]
+void handle_vsnlib(void* buf, size_t len, void* nif, void* stack){
+  struct nlmsghdr* header = (struct nlmsghdr*) buf;
+  struct nlmsghdr* ret_pkg;
+  while (NLMSG_OK(header, len)) {
+    /*int err;*/
+    int type;
+
+    if (header->nlmsg_type == NLMSG_DONE)
+      break;
+    type=header->nlmsg_type - RTM_BASE;
+    header->nlmsg_pid=getpid();
+    if (type >= 0 && vsncli_fun_table[type] != NULL) {
+        printf("call fun client vsnlib\n");
+        struct ret_val* app = malloc(sizeof(struct ret_val));
+        (vsncli_fun_table[type](header, nif, stack));
+    }
+    header = NLMSG_NEXT(header, len);
+  }
+}
+\end{lstlisting}
+Questa funzione contiene un loop che cicla sui messaggi del paccheto netlink, che di fatto potrebbero essere pi\`u di uno. Per ogni messaggio ne viene analizzata la tipologia ed in base si accede all'emento dell'array che contiene il puntatore alla funzione adeguata a svolgere quel compito.\\
 L'utente non ha accesso ad altre funzioni perch\`e \`e la libreria stessa ad analizzare il pacchetto, riempire i campi della struttura generica ed inviarlo al modulo relspecifico dello stack.\\
 In risposta si ricever\`a una struttura adatta alla costruzione del paccehetto netlink da spedire alla system call recvfrom del programma in attesa, questo \`e l'ultimo compito della nostra libreria.
 \subsection{Moduli}
 La presenza di moduli per gestire i vari stack lascia la libert\`a a chiunque necessiti di uno stack non supportato, o personalizzato, di creare il proprio modulo rispettando le specifiche della libreria.\\
-Ogni modulo, infatti, ha la stessa struttura e contiene una funzioni generiche comuni in tutti gli stack. I prototipi di queste funzioni hanno in comune la desinenza che serve a specificare l'azione da compiere, mentre a distinguerle \`e la radice che prende il nome dello stack.
-\\ codice di esempio \\
+Ogni modulo, infatti, ha la stessa struttura e contiene azioni generiche comuni in tutti gli stack. Possiamo vedere il prototipo di una di queste funzioni qui di seguito.
+\begin{lstlisting}[style=CStyle]
+  struct response* adddeladdr(struct config* cfg);
+  struct response* getaddr(struct config* cfg);
+  struct response* adddellink(struct config* cfg);
+  struct response* getsetlink(struct config* cfg);
+  struct response* adddelroute(struct config* cfg);
+  struct response* getroute(struct config* cfg);
+\end{lstlisting}
 In breve ogni modulo \`e composto dallo stesso numero di funzioni che si occupano di mediare la comunicazione tra la libreria e il vero stack.
-In ognuna delle funzioni risiedono le chiamate specifiche dello stack utili per completare l'operazione richiesta dal pacchetto netlink.\\
-Grazie alla tecnica dei puntatori a funzione, si riesce ad essere abbastanza generali e possiamo evitare di specificare il nome completo delle funzioni. Allora l'idea \`e stata quella di inizializzare, in fase di caricamento della libreria (che avviene con dlopen), un array di puntatori a funzione (attraverso dlsym) in modo tale da poter effettuare le chiamate attraverso di esso. Dlopen e dlsym permettono di caricare dinamicamente solo il modulo di cui si necessita.\\
+Ognuna di queste funzioni ha un'implementazione diversa a seconda del modulo.\\
+Grazie alla tecnica dei puntatori a funzione, si riesce ad essere abbastanza generali e possiamo evitare di specificare il nome completo delle funzioni. \\
+L'idea \`e stata quella di inizializzare, in fase di caricamento della libreria (che avviene con dlopen), un array di puntatori a funzione (attraverso dlsym) in modo tale da poter effettuare le chiamate attraverso di esso. Dlopen e dlsym permettono di caricare dinamicamente solo il modulo di cui si necessita.\\
 All' interno dei moduli le funzioni ricevono in input lo stesso tipo di struttura. Durante l'esecuzione di un'azione loro compito \`e la raccola di informazioni dalle funzioni reali dello stack che verranno poi usate per riempire i campi della struttura di risposta chapter a sua volta servir\`a a creare il payload per il pacchetto netlink di risposta.
-\section{Sviluppi Futuri}
-In fase di progettazione non sono stati posti limiti alla crescita del progetto e la sua modularit\`a \`e legata principalmente a questo aspetto.\\
-L'augurio \`e che questo progetto continui a crescere arricchendosi di funzionalit\`a.\\
-In questa fase ci si \`e occupati delle configurazioni e del routing che deve essere completata e testata prima di poter affermarne la stabilit\`a.\\
-Tra le varie ipotesi di proseguimento c'\`e quella di gestione del filtering ovvero occuparsi di tutta la parte riguardante le iptables.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%non numera l'ultima pagina sinistra
 \clearpage{\pagestyle{empty}\cleardoublepage}

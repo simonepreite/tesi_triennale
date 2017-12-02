@@ -32,7 +32,9 @@ Uno stack di rete legato al processo permette di connettere lo stesso ad una ret
 
 \subsection{PicoTCP}
 PicoTCP\cite{K4} \`e supportato da Tass Belgium (Altran); \`e lo stack pi\`u conosciuto e diffuso per sistemi embedded ed esistono anche dei progetti basati su IP di reti mesh realizzati con picoTCP\cite{K14}.\\
-Purtroppo per motivi commerciali alcune parti del codice non sono state rese pubbliche anche se rappresentano una piccola percentuale dell'intero progetto.
+PicoTCP presenta una struttura modulare (schema molto utilizzato per questo tipo di progetto come vedremo in seguito), che permette di avere il minimo indispensabile all'interno dell'applicazione.\\
+Vanta la compatibilit\`a con un gran numero di dispositivi costruiti con diversi processori e interfacce di rete, pu\`o essere compilato con diversi compilatori ed \`e gi\`a integrato in alcuni sistemi nati per ridurre al minimo il consumo di risorse.\\
+Purtroppo a causa di incompatibilit\`a con la licenza GPL alcune parti del codice non sono state rese pubbliche anche se rappresentano una piccola percentuale dell'intero progetto.
 \subsection{LWIP}
 Nasce come progetto di Adam Dunkels pensato per sistemi embedded ma che inizialmente non forniva supporto ad IPv6.\\
 Light-weight IP (LWIP\cite{K13}) vanta un core molto piccolo e la possibilit\`a di eseguire anche senza sistema oprativo (single-threaded) e con il minor consumo di RAM possibile, inoltre \`e modulare ed offre la possibilit\`a di aggiungere protocolli come DHCP e DNS solo in caso di necessit\`a.\\
@@ -101,7 +103,7 @@ L'immagine successiva rende perfettamente il concetto.
                                         %   per here, cio� la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
                                         %   la figura
-\includegraphics[width=15cm]{netlink_comunication}%inserisce una figura larga 5cm
+\includegraphics[width=10cm]{netlink_comunication}%inserisce una figura larga 5cm
                                         %se si vuole usare va scommentata
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%inserisce la legenda ed etichetta
