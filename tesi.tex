@@ -30,10 +30,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%libreria per avere l'indentazione
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   all'inizio dei capitoli, ...
 \usepackage{indentfirst}
-%
-%%%%%%%%%libreria per mostrare le etichette
-%\usepackage{showkeys}
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%libreria per inserire grafici
 \usepackage{graphicx}
 %
@@ -49,7 +45,7 @@
 \usepackage{latexsym}
 \usepackage{amsthm}
 %\usepackage[breaklinks=true]{hyperref}
-\usepackage[hyphens]{url}
+\usepackage{hyperref}
 \usepackage{subfiles}
 \usepackage{xcolor}
 \usepackage{subfigure}
@@ -64,6 +60,7 @@
     backgroundcolor=\color{backgroundColour},
     commentstyle=\color{mGreen},
     keywordstyle=\color{magenta},
+    keywordstyle=[2]\color{magenta},
     numberstyle=\tiny\color{mGray},
     stringstyle=\color{mPurple},
     basicstyle=\ttfamily\small,
@@ -78,6 +75,27 @@
     showtabs=false,
     tabsize=2,
     language=C
+}
+
+\lstdefinelanguage{Bashn}[]{bash}{
+backgroundcolor=\color{backgroundColour},
+commentstyle=\color{mGreen},
+keywordstyle=\color{magenta},
+keywordstyle=[2]\color{magenta},
+numberstyle=\tiny\color{mGray},
+stringstyle=\color{mPurple},
+basicstyle=\ttfamily\small,
+breakatwhitespace=false,
+breaklines=true,
+captionpos=b,
+keepspaces=true,
+numbers=left,
+numbersep=5pt,
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+tabsize=2,
+morekeywords={mkdir, git, vde_switch, vdens}
 }
 
 %

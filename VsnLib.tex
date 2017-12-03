@@ -77,18 +77,18 @@ void handle_vsnlib(void* buf, size_t len, void* nif, void* stack){
 }
 \end{lstlisting}
 Questa funzione contiene un loop che cicla sui messaggi del paccheto netlink, che di fatto potrebbero essere pi\`u di uno. Per ogni messaggio ne viene analizzata la tipologia ed in base si accede all'emento dell'array che contiene il puntatore alla funzione adeguata a svolgere quel compito.\\
-L'utente non ha accesso ad altre funzioni perch\`e \`e la libreria stessa ad analizzare il pacchetto, riempire i campi della struttura generica ed inviarlo al modulo relspecifico dello stack.\\
+L'utente non ha accesso ad altre funzioni perch\'e \`e la libreria stessa ad analizzare il pacchetto, riempire i campi della struttura generica ed inviarlo al modulo relspecifico dello stack.\\
 In risposta si ricever\`a una struttura adatta alla costruzione del paccehetto netlink da spedire alla system call recvfrom del programma in attesa, questo \`e l'ultimo compito della nostra libreria.
 \subsection{Moduli}
 La presenza di moduli per gestire i vari stack lascia la libert\`a a chiunque necessiti di uno stack non supportato, o personalizzato, di creare il proprio modulo rispettando le specifiche della libreria.\\
 Ogni modulo, infatti, ha la stessa struttura e contiene azioni generiche comuni in tutti gli stack. Possiamo vedere il prototipo di una di queste funzioni qui di seguito.
 \begin{lstlisting}[style=CStyle]
-  struct response* adddeladdr(struct config* cfg);
-  struct response* getaddr(struct config* cfg);
-  struct response* adddellink(struct config* cfg);
-  struct response* getsetlink(struct config* cfg);
-  struct response* adddelroute(struct config* cfg);
-  struct response* getroute(struct config* cfg);
+struct response* adddeladdr(struct config* cfg);
+struct response* getaddr(struct config* cfg);
+struct response* adddellink(struct config* cfg);
+struct response* getsetlink(struct config* cfg);
+struct response* adddelroute(struct config* cfg);
+struct response* getroute(struct config* cfg);
 \end{lstlisting}
 In breve ogni modulo \`e composto dallo stesso numero di funzioni che si occupano di mediare la comunicazione tra la libreria e il vero stack.
 Ognuna di queste funzioni ha un'implementazione diversa a seconda del modulo.\\
