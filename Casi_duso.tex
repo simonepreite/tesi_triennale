@@ -83,7 +83,7 @@ In pratica si occupano di fare quello che farebbe un programma come ip in manier
 \item[VsnLib: ]Per tutte le operazioni viene chiamata sempre la stessa funzione ``handle'' di VsnLib cambiando solo il paccehtto inviato di fatto. Questo dimostra come la libreria sia in grado di interpretare in maniera autonoma i pacchetti netlink ed utilizzarne le informazioni per completare con successo (o con fallimento in caso le informazioni non siano coerenti) le operazioni richieste.
 \end{description}
 \subsection{Test}
-Ispirato da un programma esplicativo per LWIPv6 questo test dovrebbe avere lo stesso comportamento di netcat ma la configurazione dello stack avviene attraverso VsnLib e i pacchetti netlink, come mostrato nell'Appendice \ref{code:AppB}.
+Ispirato da un programma esplicativo per LWIPv6 questo test dovrebbe avere lo stesso comportamento di netcat ma la configurazione dello stack avviene attraverso VsnLib e i pacchetti netlink, come mostrato nell'Appendice \ref{code:AppC}.
 Andiamo in sequenza:\\
 Come prima operzione viene inizializzata VsnLib, successivamente controlla che non sia necessario caricare LWIPv6 dinamicamente ed una volta superato questo step vengono creati stack e interfaccia di rete (nel caso specifico viene collegata ad uno switch vde). In ultima analisi vengono eseguite le configurazioni necessarie a rendere l'interfaccia attiva.
 \subsection{Replica dell'esperimento}
