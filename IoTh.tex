@@ -28,7 +28,7 @@ Una nota va anche fatta in termini di sicurezza. La possibilit\`a che ogni servi
 
 \section{Stack Implementati}
 Diversi sono i progetti che si occupano di offrire ai processi il proprio stack di rete; tra questi ne verranno presi in esame tre, considerati pi\`u indicati per uno studio in quanto open source. Ognuno di essi offre la propria implementazione di stack di rete.\\
-Uno stack di rete legato al processo permette di connettere lo stesso ad una rete reale, tramite le interfacce fornite dal sistema, o virtuale (ad esempio VDE) come se fosse una macchina fisica a se stante, a questo ogni processo pu\`o gestire la rete con le proprie regole che possono differire da quelle in uso sulla macchina che lo ospita.
+Uno stack di rete legato al processo permette di connettere lo stesso ad una rete reale, tramite le interfacce fornite dal sistema, o virtuale (ad esempio VDE) come se fosse una macchina fisica a s\`e stante, a questo ogni processo pu\`o gestire la rete con le proprie regole che possono differire da quelle in uso sulla macchina che lo ospita.
 
 \subsection{PicoTCP}
 PicoTCP\cite{K4} \`e supportato da Tass Belgium (Altran); \`e lo stack pi\`u conosciuto e diffuso per sistemi embedded ed esistono anche dei progetti, basati su IP, di reti mesh realizzati con picoTCP\cite{K14}.\\
@@ -39,14 +39,12 @@ Purtroppo a causa di incompatibilit\`a con la licenza GPL alcune parti del codic
 Nasce come progetto di Adam Dunkels pensato per sistemi embedded ma che inizialmente non forniva supporto ad IPv6.\\
 Light-weight IP (LWIP\cite{K13}) vanta un core molto piccolo e la possibilit\`a di eseguire anche senza sistema oprativo (single-threaded) e con il minor consumo di RAM possibile, inoltre \`e modulare ed offre la possibilit\`a di aggiungere protocolli come DHCP e DNS solo in caso di necessit\`a.\\
 Supporta sia little che big endian e gira su processori a 8 e 32 bit, quindi funziona anche su un semplice ATMEGA.\\
-Unica pecca \`e il protoccolo IPv6 che \`e ancora in fase sperimentale, infatti il supporto IPv6 pu\`o essere aggiunto ed \`e scaricabile da git.
+Il protocollo IPv6 \`e ancora in fase sperimentale: il supporto IPv6 \`e implementato solamente nella versione disponibile da GITHub.
 \subsection{LWIPv6}
-LWIPv6\cite{K6} nasce per colmare la mancanza del supporto IPv6 in LWIP, col tempo si \`e differenziato al punto tale da essere considerato un progetto a se stante.\\
-\begin{description}                     %crea un elenco descrittivo
-  \item[virtualsquare\cite{K15}: ] un progetto ideato da Renzo Davoli e Michael Goldweber. Comprende una gamma di tool pensati per sperimentare e creare strumenti di uso comune in tema di virtualizzazione nell'ambito dei sistemi operativi e delle reti.
-\end{description}
-Quando al team di virtualsquare \`e sopravvenuta la necessit\`a di avere uno stack per la rete vde non esisteva ancora nulla di maturo o comunque plug and play, da questa esigenza il team ha pensato di realizzare uno stack versatile in versione libreria tale per cui ogni processo potesse avere il proprio stack di rete.\\
-Caratteristica principale di LWIPv6 \`e il suo motore ibrido che, di fatto funziona solo con IPv6 e mappa in questo protocollo le comunicazioni IPv4.\\
+LWIPv6\cite{K6} nasce per colmare la mancanza del supporto IPv6 in LWIP, col tempo si \`e differenziato al punto tale da essere considerato un progetto a s\`e stante.\\
+Quando al team di virtualsquare\footnote{un progetto ideato da Renzo Davoli e Michael Goldweber. Comprende una gamma di tool pensati per sperimentare e creare strumenti di uso comune in tema di virtualizzazione nell'ambito dei sistemi operativi e delle reti.}\cite{K15} \`e sopravvenuta la necessit\`a di avere uno stack per la rete VDE non esisteva ancora nulla di maturo o comunque plug and play, da questa esigenza il team ha pensato di realizzare uno stack versatile in versione libreria tale per cui ogni processo potesse avere il proprio stack di rete.\\
+Caratteristica principale di LWIPv6 \`e il suo \text{motore} ibrido che, di fatto funziona solo con IPv6. \\
+Gli indirizzi usati dal LWIPv6 sono descritti nel RFC 4291\cite{K17} al paragrafo 2.5.5.2. IPv4-Mapped IPv6 Address.
 La conversione degli indirizzi ip da IPv4 ad IPv6 \`e particolare ma intuitiva. I 32 bit finali dell'indirizzo IPv6 rappresentano quello in versione 4, i 16 bit antecedenti sono settati a 1 e la parte restante, i primi 80 bit, a 0. In tabella \ref{tab:IPv4toIPv6} un esempio sull'indirizzo 192.168.1.2.
 \begin{table}[h]                        %ambiente tabella
                                         %(serve per avere la legenda)
@@ -68,7 +66,7 @@ $IPv6$ & $00000000.00000000.0000$ & $FFFF$ & $C0A80102$\\
 \end{table}
 
 Per quanto riguarda le maschere per\`o questa configurazione non pu\`o essere adottata. Se i primi 80 bit venissero settati a 0 non sarebbero considerati e nel caso in cui due reti differissero proprio nei primi 80 bit non potremmo pi\`u smistare i pacchetti verso la corretta rete di destinazione.\\
-LWIPv6 si caratterizza perch\'e tramite una modifica della conversione non ha bisogno di usare due motori diversi per IPv4 ed IPv6 ma uno che \`e ibrido. La modifica \`e semplice ed \`e stato sufficiente ribaltare i primi 80 bit. Come prima suggeriamo un esempio di conversione di una maschera all'interno di LWIPv6 nella tabella \ref{tab:IPv4toIPv6 mask}
+LWIPv6 si caratterizza perch\'e tramite una modifica della conversione non ha bisogno di usare due \text{motori} diversi per IPv4 ed IPv6 ma uno che \`e ibrido. La modifica \`e semplice ed \`e stato sufficiente ribaltare i primi 80 bit. Come prima suggeriamo un esempio di conversione di una maschera all'interno di LWIPv6 nella tabella \ref{tab:IPv4toIPv6 mask}
 
 \begin{table}[h]                        %ambiente tabella
                                         %(serve per avere la legenda)
@@ -92,7 +90,7 @@ $IPv6$ & $FFFFFFFF.FFFFFFFF.FFFF$ & $FFFF$ & $FFFFFF00$\\
 \subsection{Inter Process Communication(IPC)}
 Molti processi necessitano di scambiare informazioni per i motivi pi\`u disparati, dalla comunicazione di rete a quella interna ad una sola macchina.\\
 \`E banalmente limitativo pensare di costruire solo programmi fini a se stessi e che quindi non prevedano nessuna interazione con altri programmi.\\
-Con IPC intendiamo quindi l'insieme delle tecnologie adottate per permettere ai processi di comunicare tra essi, che siano ospitati sulla stessa macchina o distribuiti sulla rete, tra queste tecnologie esiste appunto quella utilizzata all'interno della libreria VSNLib di cui parleremo nello specifico del prossimo capitolo.
+Con IPC intendiamo quindi l'insieme delle tecnologie adottate per permettere ai processi di comunicare tra essi, sia che siano ospitati sulla stessa macchina sia che siano distribuiti sulla rete, tra queste tecnologie esiste appunto quella utilizzata all'interno della libreria VSNLib di cui parleremo nello specifico del prossimo capitolo.
 \subsection{Il Sistema IPC Netlink}
 Netlink \`e un sistema IPC adottato dal kernel linux perch\'e in grado di mettere in comunicazione diversi task, solitamente serve per far comunicare task in user-space con task in kernel-space ma pu\`o far interagire anche processi entrambi in user-space.\\
 Studiato per essere il successore di ioctl per le configurazioni ed il monitoraggio, si propone di essere pi\`u flessibile.

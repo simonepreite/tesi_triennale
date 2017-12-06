@@ -10,7 +10,7 @@ Nessuno dei progetti ha per\`o tenuto in considerazione l'idea di utilizzare un'
 L'idea di creare questa libreria nasce proprio dall' esigenza di uniformare le interfacce di comunicazione in modo tale che l'utente non sia costretto ad adattarsi ogni qual volta decida di cambiare stack.\\
 \section{VSNLib}
 \subsection{Preambolo}
-Per configurare uno stack di rete programmi come ip generano un pacchetto netlink con le informazioni necessarie lo inviano al kernel che lo elabora, esegue le operazioni e genera un messaggio contenente un flag attraverso il quale viene comunicato il tipo di errore (0 in caso di successo). A questo messaggio \`e associato un payload di risposta generalmente usato per comporre un feedback da mostrare all'utente che sta interagendo con il programma, in figura \ref{fig:nlmserror} lo schema dell'header per il messaggio di risposta.\\
+Per configurare uno stack di rete programmi come {\tt {ip}}\footnote{il programma usato per configurare lo stack di rete tramite comandi quali {\tt {ip addr...}, \tt {ip link...}, \tt {ip route...} ecc.}} generano un pacchetto netlink con le informazioni necessarie lo inviano al kernel che lo elabora, esegue le operazioni e genera un messaggio contenente un flag attraverso il quale viene comunicato il tipo di errore (0 in caso di successo). A questo messaggio \`e associato un payload di risposta generalmente usato per comporre un feedback da mostrare all'utente che sta interagendo con il programma, in figura \ref{fig:nlmserror} lo schema dell'header per il messaggio di risposta.\\
 \begin{figure}[h]                       %crea l'ambiente figura; [h] sta
                                         %   per here, cio� la figura va qui
 \begin{center}                          %centra nel mezzo della pagina
@@ -25,10 +25,10 @@ Per configurare uno stack di rete programmi come ip generano un pacchetto netlin
 \end{figure}
 VSNLib \`e un progetto in fase di sviluppo scritto in C e completamente opensource, liberamente scaricabile attraverso la piattaforma github al seguente link \url{https://github.com/simonepreite/vsnlib}.
 
-\subsection{Ambiente}
-La necessit\`a primaria: catturare queste comunicazioni netlink.\\
+\subsection{Ambiente di Sperimentazione}
+Per poter sperimentare e valutare le funzionalita' della libreria VSNLib \`e necessario intercettare le comunicazioni Netlink fra i processi e il kernel.
 Per farlo si \`e reso necessario intercettare la system call di invio della richiesta contenente il payload; ovvero l'esecuzione della sendto, verso il socket netlink sotto la nostra attenzione, contenente il buffer della richiesta.\\
-In questo punto interviene la nostra libreria, che si interpone e di fatto fa le veci del kernel, al quale il pacchetto netlink non arriver\`a mai realmente.\\
+In questo punto interviene la nostra libreria che si interpone e, di fatto, fa le veci del kernel, al quale il pacchetto netlink non arriver\`a mai realmente.\\
 In partenza VSNLib utilizzava come motore di cattura delle system call la libreria purelibc\cite{K8}, in seguito per\`o si \`e giunti alla conclusione che costruire un modulo ad hoc all'interno del sistema vuos fosse un'alternativa pi\`u versatile, immediata e pulita, inoltre vuos ha un sistema di debug built in che rende pi\`u semplice l'individuazione dei problemi legati allo sviluppo.\\
 Vuos\cite{K5} \`e un progetto di virtualsquare, ha come obiettivo quello di virtualizzare parti del sistema operativo senza negare all'utilizzatore la scelta degli elementi da virtualizzare, \`e costruito con un sistema di moduli che possono essere aggiunti a discrezione dell'utente.\\
 La versione di sviluppo ufficiale \`e liberamente scaricabile attraverso la piattaforma github al seguente link \url{https://github.com/virtualsquare/vuos}. \\
@@ -62,7 +62,7 @@ int init_vsnlib(char* stack);
 void handle_vsnlib(void* buf, size_t len, void* nif, void* stack);
 \end{lstlisting}
 La prima funzione \`e di inizializzazione della libreria e tramite dlopen ed il nome del modulo da caricare si incarica di popolare l'array di puntatori con i corrispettivi delle funzioni nel modulo.\\
-La seconda funzione contiene un loop che cicla sui messaggi del paccheto netlink, che di fatto potrebbero essere pi\`u di uno. Per ogni messaggio ne viene analizzata la tipologia ed in base al tipo si accede all'emento dell'array che contiene il puntatore alla funzione adeguata a svolgere quel compito.\\
+La seconda funzione contiene un loop che cicla sui messaggi del paccheto netlink, che di fatto potrebbero essere pi\`u di uno. Per ogni messaggio ne viene analizzata la tipologia ed in base al tipo si accede all'elemento dell'array che contiene il puntatore alla funzione adeguata a svolgere quel compito.\\
 L'utente non ha accesso ad altre funzioni perch\'e \`e la libreria stessa ad analizzare il pacchetto, riempire i campi della struttura generica ed inviarlo al modulo relspecifico dello stack.\\
 In risposta si ricever\`a una struttura adatta alla costruzione del paccehetto netlink da spedire alla system call recvfrom del programma in attesa, questo \`e l'ultimo compito della nostra libreria.
 \subsection{Moduli}

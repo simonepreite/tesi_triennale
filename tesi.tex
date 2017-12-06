@@ -66,8 +66,10 @@ backgroundcolor=\color{backgroundColour},
   basicstyle=\ttfamily\small,
   keywordstyle=\bfseries\color{green!40!black},
   commentstyle=\itshape\color{purple!40!black},
-  identifierstyle=\color{blue},
-  stringstyle=\color{orange}
+  morekeywords=[2]{fill_buf_route,fill_buf_addr, handle_vsnlib, fill_buf_link, init_vsnlib, adddellink, getsetlink, adddeladdr, getaddr, adddelroute, getroute, rtm_newroute_c, rtm_delroute_c, rtm_getroute_c, rtm_newaddr_c, rtm_deladdr_c, rtm_getaddr_c, rtm_newlink_c, rtm_dellink_c, rtm_getlink_c, rtm_setlink_c},  keywordstyle=[2]\color{blue},
+  identifierstyle=\color{black},
+  stringstyle=\color{orange},
+  tabsize=2
 }
 
 \lstdefinestyle{CscriptStyle}{
@@ -80,8 +82,14 @@ backgroundcolor=\color{backgroundColour},
   basicstyle=\ttfamily\scriptsize,
   keywordstyle=\bfseries\color{green!40!black},
   commentstyle=\itshape\color{purple!40!black},
-  identifierstyle=\color{blue},
+  keywordstyle=[2]\color{blue},
+  morekeywords=[2]{fill_buf_route,fill_buf_addr, handle_vsnlib, fill_buf_link, init_vsnlib, adddellink, getsetlink, adddeladdr, getaddr, adddelroute, getroute, rtm_newroute_c, rtm_delroute_c, rtm_getroute_c, rtm_newaddr_c, rtm_deladdr_c, rtm_getaddr_c, rtm_newlink_c, rtm_dellink_c, rtm_getlink_c, rtm_setlink_c},
+  identifierstyle=\color{black},
   stringstyle=\color{orange},
+  keywordstyle=[4]\color{brown},
+  morekeywords=[4]{IP64_ADDR, IP64_MASKADDR, NLMSG_NEXT, NLMSG_DATA, NLMSG_DONE, NLMSG_OK},
+  keywordstyle=[5]\color{red},
+  morekeywords=[5]{API_TABLE_SIZE, RTDL_LAZY, RTM_BASE, NULL, INET6_ADDRSTRLEN, AF_INET, AF_INET6, RTM_NEWADDR, RTM_DELADDR, IP_ADD_ANY, RTM_NEWROUTE, RTM_DELROUTE, PF_INET, PF_INET6},
   tabsize=2
 }
 
@@ -90,7 +98,11 @@ backgroundcolor=\color{backgroundColour},
 backgroundcolor=\color{backgroundColour},
 commentstyle=\color{mGreen},
 keywordstyle=\color{magenta},
-keywordstyle=[2]\color{magenta},
+keywordstyle=[3]\color{blue},
+keywordstyle=[2]\color{red},
+keywords={mkdir, git, vde_switch, vdens, rm, cd, cmake, make, sudo, echo, ip, nc, ./testX.exe},
+keywords=[3]{addr, link, route},
+keywords=[2]{CC, FLAG_PREP, FLAG_CC, BUILDDIR, OBJ, STACK, SWITCH},
 numberstyle=\tiny\color{mGray},
 stringstyle=\color{mPurple},
 basicstyle=\ttfamily\small,
@@ -104,7 +116,7 @@ showspaces=false,
 showstringspaces=false,
 showtabs=false,
 tabsize=2,
-morekeywords={mkdir, git, vde_switch, vdens}
+moredelim=[is][\color{blue}]{[}{]}
 }
 
 %
