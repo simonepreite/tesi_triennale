@@ -6,7 +6,7 @@
 L'Internet of Things, ovvero l'internet delle cose, vuole rappresentare la diffusione dei sistemi embedded come veri e propri nodi di reti. Nell'ottica dell'IoT, oggi, apparecchi comuni in un'abitazione, quali condizionatore, la caldaia o addirittura il tostapane, possono essere nodi di rete ed essere quindi configurati e controllati attraverso di essa.\\
 Il concetto di Internet of Threads \`e una evoluzione di questa astrazione. L'idea alla base di IoTh \`e quella di avere non solo oggetti ma anche processi come nodi di rete.\\
 Per poter capire pienamente i vantaggi dell'IoTh si pu\`o pensare ad un'analogia con quanto \`e successo nel mondo della telefonia. In passato la telefonia collegava apparecchi fissi connessi via cavo. In questo modello il numero di telefono individuava un luogo e non una persona e quindi era comune, per trovare una persona, doversi interrogare sul dove questa potesse essere; al contrario l'avvento dei telefoni cellulari ha cambiato l'idea di significato di numero di telefono, non pi\`u associato a luoghi fisici ma ad una persona infatti i telefoni cellulari sono normalmente telefoni personali\cite{K1,K2}.\\
-Come possiamo notare infatti, con questa tecnologia lo stack \`e direttamente integrato nel programma.
+Come si pu\`o notare infatti, con questa tecnologia lo stack \`e direttamente integrato nel programma.
 \begin{figure}[h]
      \begin{center}%
         \subfigure[stack associato all'interfaccia fisica]{%
@@ -23,16 +23,16 @@ Come possiamo notare infatti, con questa tecnologia lo stack \`e direttamente in
         Differenze tra stack reali e virtuali
      }%
 \end{figure}%\
-Nello stesso modo IoTh indirizza i processi che forniscono un servizio. Significa che questi processi non sono pi\`u vincolati a risiedere in un luogo specifico, o in un elaboratore specifico nell'ambito delle reti, ma \`e possibile trasparentemente farli migrare da una macchina all'altra senza che questo crei difficolt\`a di indirizzamento.\\
-Una nota va anche fatta in termini di sicurezza. La possibilit\`a che ogni servizio utilizzi propri indirizzi IP e uno stack di rete privato rende molto pi\`u difficile se non praticamente impossibile sfruttarne le fragilit\`a per scalare l'intrusione ad altri servizi presenti su di esso.
+Nello stesso modo IoTh indirizza i processi che forniscono un servizio. Significa che questi non sono pi\`u vincolati a risiedere in un luogo specifico, o in un elaboratore specifico nell'ambito delle reti, ma \`e possibile trasparentemente farli migrare da una macchina all'altra senza che questo crei difficolt\`a di indirizzamento.\\
+Una nota va fatta in termini di sicurezza. La possibilit\`a che ogni servizio utilizzi propri indirizzi IP e uno stack di rete privato rende molto pi\`u difficile, se non praticamente impossibile, sfruttarne le fragilit\`a per scalare l'intrusione ad altri servizi presenti su di esso.
 
 \section{Stack Implementati}
-Diversi sono i progetti che si occupano di offrire ai processi il proprio stack di rete; tra questi ne verranno presi in esame tre, considerati pi\`u indicati per uno studio in quanto open source. Ognuno di essi offre la propria implementazione di stack di rete.\\
-Uno stack di rete legato al processo permette di connettere lo stesso ad una rete reale, tramite le interfacce fornite dal sistema, o virtuale (ad esempio VDE) come se fosse una macchina fisica a s\`e stante, a questo ogni processo pu\`o gestire la rete con le proprie regole che possono differire da quelle in uso sulla macchina che lo ospita.
+Diversi sono i progetti che si occupano di offrire ai processi il proprio stack di rete. Tra questi ne verranno presi in esame tre, considerati pi\`u indicati per uno studio in quanto open source. Ognuno di essi offre la propria implementazione di stack di rete.\\
+Uno stack di rete legato al processo permette di connettere lo stesso ad una rete reale, tramite le interfacce fornite dal sistema, o virtuale (ad esempio VDE) come se fosse una macchina fisica a s\`e stante. Grazie a questo ogni processo pu\`o gestire la rete con le proprie regole che possono differire da quelle in uso sulla macchina che lo ospita.
 
 \subsection{PicoTCP}
 PicoTCP\cite{K4} \`e supportato da Tass Belgium (Altran); \`e lo stack pi\`u conosciuto e diffuso per sistemi embedded ed esistono anche dei progetti, basati su IP, di reti mesh realizzati con picoTCP\cite{K14}.\\
-PicoTCP presenta una struttura modulare (schema molto utilizzato per questo tipo di progetti come vedremo in seguito), che permette di avere il minimo indispensabile all'interno dell'applicazione.\\
+PicoTCP presenta una struttura modulare (schema molto utilizzato per questo tipo di progetti come si vedr\`a in seguito), che permette di avere il minimo indispensabile all'interno dell'applicazione.\\
 Vanta la compatibilit\`a con un gran numero di dispositivi costruiti con diversi processori e interfacce di rete, pu\`o essere compilato con diversi compilatori ed \`e gi\`a integrato in alcuni sistemi nati per ridurre al minimo il consumo di risorse.\\
 Purtroppo a causa di incompatibilit\`a con la licenza GPL alcune parti del codice non sono state rese pubbliche anche se rappresentano una piccola percentuale dell'intero progetto.
 \subsection{LWIP}
@@ -43,7 +43,7 @@ Il protocollo IPv6 \`e ancora in fase sperimentale: il supporto IPv6 \`e impleme
 \subsection{LWIPv6}
 LWIPv6\cite{K6} nasce per colmare la mancanza del supporto IPv6 in LWIP, col tempo si \`e differenziato al punto tale da essere considerato un progetto a s\`e stante.\\
 Quando al team di virtualsquare\footnote{un progetto ideato da Renzo Davoli e Michael Goldweber. Comprende una gamma di tool pensati per sperimentare e creare strumenti di uso comune in tema di virtualizzazione nell'ambito dei sistemi operativi e delle reti.}\cite{K15} \`e sopravvenuta la necessit\`a di avere uno stack per la rete VDE non esisteva ancora nulla di maturo o comunque plug and play, da questa esigenza il team ha pensato di realizzare uno stack versatile in versione libreria tale per cui ogni processo potesse avere il proprio stack di rete.\\
-Caratteristica principale di LWIPv6 \`e il suo \text{motore} ibrido che, di fatto funziona solo con IPv6. \\
+Caratteristica principale di LWIPv6 \`e il suo \textit{motore} ibrido che, di fatto funziona solo con IPv6. \\
 Gli indirizzi usati dal LWIPv6 sono descritti nel RFC 4291\cite{K17} al paragrafo 2.5.5.2. IPv4-Mapped IPv6 Address.
 La conversione degli indirizzi ip da IPv4 ad IPv6 \`e particolare ma intuitiva. I 32 bit finali dell'indirizzo IPv6 rappresentano quello in versione 4, i 16 bit antecedenti sono settati a 1 e la parte restante, i primi 80 bit, a 0. In tabella \ref{tab:IPv4toIPv6} un esempio sull'indirizzo 192.168.1.2.
 \begin{table}[h]                        %ambiente tabella
@@ -52,7 +52,7 @@ La conversione degli indirizzi ip da IPv4 ad IPv6 \`e particolare ma intuitiva. 
 \begin{tabular}{r|c|c|c}                  %tre colonne con righe verticali
                                         %   prodotte con |
 \hline
-$IP version$ & $80 bit$ & $16 bit$ & $32 bit$\\
+IP $\langle version \rangle$ & 80 bit & 16 bit & 32 bit\\
 \hline \hline                         %inserisce due righe orizzontali
 $IPv4$ & $unused$  & $unused$  & $192.168.1.2$\\           %& separa le colonne e con
 \hline                                  %inserisce una riga orizzontale
@@ -65,8 +65,8 @@ $IPv6$ & $00000000.00000000.0000$ & $FFFF$ & $C0A80102$\\
 \end{center}
 \end{table}
 
-Per quanto riguarda le maschere per\`o questa configurazione non pu\`o essere adottata. Se i primi 80 bit venissero settati a 0 non sarebbero considerati e nel caso in cui due reti differissero proprio nei primi 80 bit non potremmo pi\`u smistare i pacchetti verso la corretta rete di destinazione.\\
-LWIPv6 si caratterizza perch\'e tramite una modifica della conversione non ha bisogno di usare due \text{motori} diversi per IPv4 ed IPv6 ma uno che \`e ibrido. La modifica \`e semplice ed \`e stato sufficiente ribaltare i primi 80 bit. Come prima suggeriamo un esempio di conversione di una maschera all'interno di LWIPv6 nella tabella \ref{tab:IPv4toIPv6 mask}
+Per quanto riguarda le maschere per\`o questa configurazione non pu\`o essere adottata. Se i primi 80 bit venissero settati a 0 non sarebbero considerati e nel caso in cui due reti differissero proprio nei primi 80 bit non si potrebbero pi\`u smistare i pacchetti verso la corretta rete di destinazione.\\
+LWIPv6 si caratterizza perch\'e, tramite una modifica della conversione, non ha bisogno di usare due \textit{motori} diversi per IPv4 ed IPv6 ma uno che \`e ibrido. La modifica \`e semplice ed \`e stato sufficiente ribaltare i primi 80 bit. Come prima, suggeriamo un esempio di conversione di una maschera all'interno di LWIPv6 nella tabella \ref{tab:IPv4toIPv6 mask}
 
 \begin{table}[h]                        %ambiente tabella
                                         %(serve per avere la legenda)
@@ -74,7 +74,7 @@ LWIPv6 si caratterizza perch\'e tramite una modifica della conversione non ha bi
 \begin{tabular}{r|c|c|c}                  %tre colonne con righe verticali
                                         %   prodotte con |
 \hline
-$IP version$ & $80 bit$ & $16 bit$ & $32 bit$\\
+IP $\langle version \rangle$ & 80 bit & 16 bit & 32 bit\\
 \hline  \hline        %inserisce due righe orizzontali
 $IPv4$ & $unused$  &  $unused$  & $255.255.255.0$\\           %& separa le colonne e con
 \hline                                  %inserisce una riga orizzontale
@@ -90,9 +90,9 @@ $IPv6$ & $FFFFFFFF.FFFFFFFF.FFFF$ & $FFFF$ & $FFFFFF00$\\
 \subsection{Inter Process Communication(IPC)}
 Molti processi necessitano di scambiare informazioni per i motivi pi\`u disparati, dalla comunicazione di rete a quella interna ad una sola macchina.\\
 \`E banalmente limitativo pensare di costruire solo programmi fini a se stessi e che quindi non prevedano nessuna interazione con altri programmi.\\
-Con IPC intendiamo quindi l'insieme delle tecnologie adottate per permettere ai processi di comunicare tra essi, sia che siano ospitati sulla stessa macchina sia che siano distribuiti sulla rete, tra queste tecnologie esiste appunto quella utilizzata all'interno della libreria VSNLib di cui parleremo nello specifico del prossimo capitolo.
+Con IPC intendiamo quindi l'insieme delle tecnologie adottate per permettere ai processi di comunicare tra essi, sia che siano ospitati sulla stessa macchina sia che siano distribuiti sulla rete. Tra queste tecnologie esiste appunto quella utilizzata all'interno della libreria VSNLib di cui parleremo nello specifico del prossimo capitolo.
 \subsection{Il Sistema IPC Netlink}
-Netlink \`e un sistema IPC adottato dal kernel linux perch\'e in grado di mettere in comunicazione diversi task, solitamente serve per far comunicare task in user-space con task in kernel-space ma pu\`o far interagire anche processi entrambi in user-space.\\
+Netlink \`e un sistema IPC adottato dal kernel linux perch\'e in grado di mettere in comunicazione diversi task. Solitamente serve per far comunicare task in user-space con task in kernel-space ma pu\`o far interagire anche processi entrambi in user-space.\\
 Studiato per essere il successore di ioctl per le configurazioni ed il monitoraggio, si propone di essere pi\`u flessibile.
 Ma come avviene esattamente la comunicazione attraverso netlink?\\
 Netlink utilizza un sistema di socket indicizzato in base ai processi. Ogni processo pu\`o definire socket diversi di tipo netlink (AF\_NETLINK, NETLINK\_GENERIC, NETLINK\_XFRM) per inviare e ricevere messaggi con e da altri processi; implementa un sistema di porte basato sul process ID. Ad esempio per la comunicazione con il kernel viene usata la porta 0.\\

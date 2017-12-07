@@ -74,7 +74,7 @@ backgroundcolor=\color{backgroundColour},
   keywordstyle=[4]\color{brown},
   morekeywords=[4]{IP64_ADDR, IP64_MASKADDR, IP6_ADDR, NLMSG_NEXT, NLMSG_DATA, NLMSG_DONE, NLMSG_OK, FD_ZERO, FD_SET, FD_ISSET, RTA_DATA},
   keywordstyle=[5]\color{red},
-  morekeywords=[5]{API_TABLE_SIZE, RTDL_LAZY, RTM_BASE, NULL, INET6_ADDRSTRLEN, AF_INET, AF_INET6, RTM_NEWADDR, RTM_DELADDR, IP_ADDR_ANY, IP_ADD_ANY, RTM_NEWROUTE, RTM_DELROUTE, PF_INET, PF_INET6, NLM_F_REQUEST, NLM_F_ACK, NLM_F_EXECL, NLM_F_CREATE, IFA_LOCAL, IFA_ADDRESS, RT_SCOPE_UNIVERSE, SOCK_STREAM, BUFSIZE, STDOUT_FILENO, RTM_NEWLINK, AF_UNSPEC, AF_NETROM, RTA_GATEWAY, RT_TABLE_MAIN, RTPROT_UNSPEC, RT_SCOPE_NOWHERE, RTN_UNSPEC, NLM_F_EXCL, STDIN_FILENO},
+  morekeywords=[5]{API_TABLE_SIZE, RTLD_LAZY, RTM_BASE, NULL, INET6_ADDRSTRLEN, AF_INET, AF_INET6, RTM_NEWADDR, RTM_DELADDR, IP_ADDR_ANY, IP_ADD_ANY, RTM_NEWROUTE, RTM_DELROUTE, PF_INET, PF_INET6, NLM_F_REQUEST, NLM_F_ACK, NLM_F_EXECL, NLM_F_CREATE, IFA_LOCAL, IFA_ADDRESS, RT_SCOPE_UNIVERSE, SOCK_STREAM, BUFSIZE, STDOUT_FILENO, RTM_NEWLINK, AF_UNSPEC, AF_NETROM, RTA_GATEWAY, RT_TABLE_MAIN, RTPROT_UNSPEC, RT_SCOPE_NOWHERE, RTN_UNSPEC, NLM_F_EXCL, STDIN_FILENO},
   keywordstyle=[6]\color{magenta},
   morekeywords=[6]{info, rtattr, in6_addr, addr_payload, route_payload, ifaddrmsg, nlmsghdr, nlmsgerror, rtmsg, link_payload, ifinfomsg, response, config, gen_api, generic_api, in_addr, sockaddr_in, sockaddr_in6, stack, netif, vsn_cli, ret_val, ip_addr},
   tabsize=2
@@ -98,7 +98,7 @@ backgroundcolor=\color{backgroundColour},
   keywordstyle=[4]\color{brown},
   morekeywords=[4]{IP64_ADDR, IP64_MASKADDR, IP6_ADDR, NLMSG_NEXT, NLMSG_DATA, NLMSG_DONE, NLMSG_OK, FD_ZERO, FD_SET, FD_ISSET, RTA_DATA},
   keywordstyle=[5]\color{red},
-  morekeywords=[5]{API_TABLE_SIZE, RTDL_LAZY, RTM_BASE, NULL, INET6_ADDRSTRLEN, AF_INET, AF_INET6, RTM_NEWADDR, RTM_DELADDR, IP_ADDR_ANY, IP_ADD_ANY, RTM_NEWROUTE, RTM_DELROUTE, PF_INET, PF_INET6, NLM_F_REQUEST, NLM_F_ACK, NLM_F_EXECL, NLM_F_CREATE, IFA_LOCAL, IFA_ADDRESS, RT_SCOPE_UNIVERSE, SOCK_STREAM, BUFSIZE, STDOUT_FILENO, RTM_NEWLINK, AF_UNSPEC, AF_NETROM, RTA_GATEWAY, RT_TABLE_MAIN, RTPROT_UNSPEC, RT_SCOPE_NOWHERE, RTN_UNSPEC, NLM_F_EXCL, STDIN_FILENO},
+  morekeywords=[5]{API_TABLE_SIZE, RTLD_LAZY, RTM_BASE, NULL, INET6_ADDRSTRLEN, AF_INET, AF_INET6, RTM_NEWADDR, RTM_DELADDR, IP_ADDR_ANY, IP_ADD_ANY, RTM_NEWROUTE, RTM_DELROUTE, PF_INET, PF_INET6, NLM_F_REQUEST, NLM_F_ACK, NLM_F_EXECL, NLM_F_CREATE, IFA_LOCAL, IFA_ADDRESS, RT_SCOPE_UNIVERSE, SOCK_STREAM, BUFSIZE, STDOUT_FILENO, RTM_NEWLINK, AF_UNSPEC, AF_NETROM, RTA_GATEWAY, RT_TABLE_MAIN, RTPROT_UNSPEC, RT_SCOPE_NOWHERE, RTN_UNSPEC, NLM_F_EXCL, STDIN_FILENO},
   keywordstyle=[6]\color{magenta},
   morekeywords=[6]{info, rtattr, in6_addr, addr_payload, route_payload, ifaddrmsg, nlmsghdr, nlmsgerror, rtmsg, link_payload, ifinfomsg, response, config, gen_api, generic_api, in_addr, sockaddr_in, sockaddr_in6, stack, netif, vsn_cli, ret_val, ip_addr},
   tabsize=2
@@ -111,9 +111,9 @@ commentstyle=\color{mGreen},
 keywordstyle=\color{magenta},
 keywordstyle=[3]\color{blue},
 keywordstyle=[2]\color{red},
-keywords={mkdir, git, vde_switch, vdens, rm, cd, cmake, make, sudo, echo, ip, nc, ./testX.exe},
-keywords=[3]{addr, link, route},
+keywords={mkdir, git, vde_switch, vdens, rm, cd, cmake, make, sudo, echo, ip, nc},
 keywords=[2]{CC, FLAG_PREP, FLAG_CC, BUILDDIR, OBJ, STACK, SWITCH},
+keywords=[3]{addr, link, route, testX, exe},
 numberstyle=\tiny\color{mGray},
 stringstyle=\color{mPurple},
 basicstyle=\ttfamily\small,
@@ -158,25 +158,7 @@ moredelim=[is][\color{blue}]{[}{]}
 \thispagestyle{empty}
 \newpage
 
-\begin{titlepage}                       %crea un ambiente libero da vincoli
-                                        %   di margini e grandezza caratteri:
-                                        %   si pu\`o modificare quello che si
-                                        %   vuole, tanto fuori da questo
-                                        %   ambiente tutto viene ristabilito
-%
-
-\thispagestyle{empty}                   %elimina il numero della pagina
-\topmargin=6.5cm                        %imposta il margina superiore a 6.5cm
-\raggedleft                             %incolonna la scrittura a destra
-\large                                  %aumenta la grandezza del carattere
-                                        %   a 14pt
-\em                                     %emfatizza (corsivo) il carattere
-Questa \`e la \textsc{Dedica}:\\
-ognuno pu\`o scrivere quello che vuole, \\
-anche nulla \ldots                      %\ldots lascia tre puntini
-\end{titlepage}
-
-\newpage
+%\include{Dedica}
 \newpage
 
 %
@@ -196,6 +178,6 @@ anche nulla \ldots                      %\ldots lascia tre puntini
 \include{AppendiceC}
 
 \include{Biblio}
-\include{Ringr}
+%\include{Ringr}
 
 \end{document}

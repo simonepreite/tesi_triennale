@@ -6,10 +6,10 @@
 Di seguito alcuni esempi di utilizzo della libreria.
 Le dimostrazioni seguenti sono state effettuate su una macchina con architettura amd64 e con installato il sistema operativo debian in versione sid (quindi unstable) ma sono state testate e riprodotte anche su altre configurazioni e distribuzioni GNU/Linux.
 \section{Environment}
-Come precedentemente accennato possiamo integrare la nostra libreria in vuos attraverso il modulo unrealvsnlib o creandone uno alternativo che dipenda da VSNLib.\\
+Come precedentemente accennato \`e possibile integrare la libreria in vuos attraverso il modulo unrealvsnlib o creandone uno alternativo che dipenda da VSNLib.\\
 \begin{description}
-\item[Creazione moduli:] La creazione di un modulo \`e molto semplice e basta serguire le linee guida di quelli preesisteni, inoltre grazie ad una routine in cmake non \`e necessario aggiungere alcuna riga manualmente al makefile e sar\`a, appunto, cmake ad occuparsi della compilazione.
-\item[Start Vuos:] Vuos si avvia attaverso il comando {\tt umvu} ed \`e in grado di interpretare comandi successivi come argomenti, come mostrato nell'esempio infatti {\tt umvu} \`e affiancato dal comando konsole e pertanto verr\`a lanciata una nuova istanza di terminale con ambiente vuos.
+\item[Creazione moduli:] La creazione di un modulo \`e molto semplice e basta seguire le linee guida di quelli preesisteni, inoltre grazie ad una routine in cmake non \`e necessario aggiungere alcuna riga manualmente al makefile e sar\`a, appunto, cmake ad occuparsi della compilazione.
+\item[Start Vuos:] Vuos si avvia attaverso il comando {\tt umvu} ed \`e in grado di interpretare comandi successivi come argomenti, come mostrato nell'esempio infatti, {\tt umvu} \`e affiancato dal comando konsole e pertanto verr\`a lanciata una nuova istanza di terminale con ambiente vuos.
 In alternativa \`e possibile utilizzare altri comandi come xterm, bash o zsh.
 \item[Include dei Moduli vuos] I moduli in vuos vengono inclusi attraverso la direttiva
 \begin{verbatim}
@@ -33,13 +33,13 @@ Un esempio di avvio e inclusione del modulo \`e quello della figura seguente.
 Nella parte successiva verr\`a mostrato un esempio di configurazione per LWIPv6 attraverso VSNLib.\\
 Per semplificare la dimostrazione si \`e deciso di non utilizzare l'ambiente sopra descritto o altre tecniche di cattura delle system call ma i pacchetti netlink sono stati costruiti all'interno del codice di test. Sono esempi statici di come li creerebbe il programma \texttt{ip} ma utili a mostrare sia come \`e formato un pacchetto di questa tipologia sia per tracciare i passi compiuti per il parsing e la configurazione.
 \begin{description}
-\item[Init VSNLib: ]L'unico header di riferimento della libreria necessario \`e vsnshared.h, all'interno troviamo dichiarate le funzioni necessarie all'utilizzo della libreria.
+\item[Init VSNLib: ]L'unico header di riferimento della libreria necessario \`e vsnshared.h, all'interno sono dichiarate le funzioni necessarie all'utilizzo della libreria.
 \begin{lstlisting}[style=CStyle]
 extern int init_vsnlib(char* stack);
 extern void handle_vsnlib(void* buf, size_t len, void* nif, void* stack);
 \end{lstlisting}
 Come gi\`a spiegato la prima funzione serve per indicare alla libreria di quale modulo fare il load pertanto richiede come input la stringa con nome del file da caricare comprensivo di \texttt{.so} (si noti che \`e necessario specificare, tra i PATH di ricerca delle librerie, quello in cui risiede il modulo \texttt{.so}. Senza questo accorgimento il file non verr\`a trovato da dlopen provocando la terminazione del programma. La variabile dell'environment da settare \`e \texttt{LD\_LIBRARY\_PATH}, un esempio \`e mostrato in figura \ref{fig:test4}).
-La seconda \`e l'unico ``handle'' per passare il pacchetto netlink che dovr\`a essere poi interpretato, inoltre prende come argomeni anche un puntatore allo stack e all'interfaccia oggetto della modifica.
+La seconda \`e l'unico ``handle'' per passare il pacchetto netlink che dovr\`a essere poi interpretato, inoltre prende come argomeni un puntatore allo stack e all'interfaccia oggetto della modifica.
 \item[Strutture: ]I pacchetti netlink sono accomunati dallo stesso header, come mostrato in precedenza, ma presentano strutture diverse per il resto. In questo esempio sono stati creati i pacchetti per l'aggiunta e la rimozione di un indirizzo da un'interfaccia, l'aggiunta e la rimozione di una rotta e l'accensione/spegnimento di un'interfaccia.
 \begin{lstlisting}[style=CStyle]
 struct info{
@@ -72,7 +72,7 @@ rispettivamente:
   \item route\_payload usato per aggiungere/rimuovere rotte.
   \item link\_payload per attivare/disattivare l'interfaccia.
 \end{itemize}
-La descrizione \`e ristretta a questo esempio, ma queste strutture vengono impeigare per compiere pi\`u azioni di quelle presentate.
+La descrizione \`e ristretta a questo esempio, ma queste strutture vengono impiegate per compiere pi\`u azioni di quelle presentate.
 \item[Creazione pacchetti: ]\`E eseguita dalle funzioni nel test.
 \begin{lstlisting}[style=CStyle]
 void fill_buf_addr(struct link_payload* buffer, int mode, int modeIP);
@@ -85,11 +85,11 @@ In pratica si occupano di fare quello che farebbe un programma come \texttt{ip} 
 \end{description}
 \subsection{Test}
 Ispirato da un programma esplicativo per LWIPv6 questo test dovrebbe avere lo stesso comportamento di netcat ma la configurazione dello stack avviene attraverso VSNLib e i pacchetti netlink, come mostrato nell'Appendice \ref{code:AppC}.
-Andiamo in sequenza:\\
-Come prima operzione viene inizializzata VSNLib, successivamente controlla che non sia necessario caricare LWIPv6 dinamicamente ed una volta superato questo step vengono creati stack e interfaccia di rete (nel caso specifico viene collegata ad uno switch vde). In ultima analisi vengono eseguite le configurazioni necessarie a rendere l'interfaccia attiva.
+Procediamo in sequenza:\\
+Come prima operazione viene inizializzata VSNLib, successivamente viene eseguito un controllo per accertarsi che non sia necessario caricare LWIPv6 dinamicamente ed una volta superato questo step vengono creati stack e interfaccia di rete (nel caso specifico viene collegata ad uno switch vde). In ultima analisi vengono eseguite le configurazioni necessarie a rendere l'interfaccia attiva.
 \subsection{Replica dell'Esperimento}
 \begin{itemize}
-  \item Preparazione: Il contesto prevede che sulla macchina siano installati vde2 e la libreria LWIPv6, vde2 \`e reperibile nei repository ufficiali di debian mentre LWIPv6 \`e disponibile nella versione sid sotto il nome di liblwipv6-dev (ricordiamo che tutto il codice \`e open source ed \`e disponibile online, ai link di riferimento in bibliografia, per lo studio, lo sviluppo e l'utilizzo).\\
+  \item Preparazione: Il contesto prevede che sulla macchina siano installati vde2 e la libreria LWIPv6, vde2 \`e reperibile nei repository ufficiali di debian mentre LWIPv6 \`e disponibile nella versione sid sotto il nome di liblwipv6-dev (si ricorda che tutto il codice \`e open source ed \`e disponibile online, ai link di riferimento in bibliografia, per lo studio, lo sviluppo e l'utilizzo).\\
   \item Installazione VSNLib:\\
   Si \`e utilizzato cmake per automatizzare il processo di compilazione e installazione della libreria.
   \begin{lstlisting}[language=Bashn]
@@ -125,11 +125,11 @@ vdens vde://</path/of/switch>
   \begin{lstlisting}[language=Bashn]
 vdens vde:///tmp/switch1
 \end{lstlisting}
-  Inoltre si ricordi, come spiegato nel readme di vdens, che l'uso dei namespace agli utenti non privilegiatid deve essere abilitato in debian
+  Inoltre si ricordi, come spiegato nel readme di vdens, che l'uso dei namespace agli utenti non privilegiati deve essere abilitato in debian
   \begin{lstlisting}[language=Bashn]
 sudo echo 1 > /proc/sys/kernel/unprivileged_userns_clone
 \end{lstlisting}
-Entrati nell'ambiente vdens bisogna configurare l'ambiente per il server che contatteremo con il nostro test:
+Entrati nell'ambiente vdens bisogna configurarlo per il server che si vuole con il nostro test:
 IPv4:
 \begin{lstlisting}[language=Bashn]
 ip addr add 192.168.250.1/24 dev vde0
@@ -144,7 +144,7 @@ nc -l6 -p 9999
 \end{lstlisting}
 Si presti attenzione alla versione di netcat installata in quanto netcat-traditional non supporta IPv6, si suggerisce netcat-openbsd.
 \item Start test:\\
-Ora non ci resta che lanciare il programma di test in base alla configurazione scelta e controllare che netcat permetta di scambiare messaggi come nelle figure \ref{fig:test4} e \ref{fig:test6}.
+Ora non resta che lanciare il programma di test in base alla configurazione scelta e controllare che netcat permetta di scambiare messaggi come nelle figure \ref{fig:test4} e \ref{fig:test6}.
 \begin{lstlisting}[language=Bashn]
 ./testX.exe STACK SWITCH
 \end{lstlisting}
