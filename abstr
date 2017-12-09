@@ -1,0 +1,12 @@
+Il contenuto di questo elaborato è incentrato sulla presentazione di un esperimento: una libreria che si propone di rendere gli stack
+di rete virtuali (come picoTCP, Light Weith IP e Light Weight IPv6) compatibili con l'interfaccia di configurazione usata dal kernel linux per il
+proprio stack interno.
+La tecnologia in questione si chiama NETLINK, un sistema IPC(Inter Process Communication). La libreria (VSNLib) dovrebbe fornire, quindi, uno strato
+di compatibilità interposto tra NETLINK e gli stack.
+La struttura è molto semplice: si tratta di un programma scritto in linguaggio C che inizialmente carica il modulo prescelto dall'utente in base allo stack
+che vuole utilizzare e successivamente resta attivo in ricezione dei pacchetti netlink generati dalle interfacce comuni a quelle di linux (ad esempio
+è possibile usare ip addr add ..., ip link ..., ip route ...). Una volta ricevuto il pacchetto viene eseguito un parsing dello stesso necessario per
+popolare la struttura comune a tutti gli stack, dopo il parsing le informazioni ottenute vengono inviate al modulo specifico che si occupa poi di
+configurare lo stack. Completate le operazioni vengono dati feedback in risposta (in caso di successo o fallimento).
+Sono presenti, all'interno dell'elaborato, dei test per verificare l'effettivo funzionamento della libreria che, pur essendo ancora una vera e propria
+sperimentazione, dimostra che la realizzazione di un'interfaccia comune è effettivamente realizzabile.
