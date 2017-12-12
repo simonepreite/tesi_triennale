@@ -1,1 +1,28 @@
- 
+Intro:
+Una rete di elaboratori si definisce come un sistema di calcolatori interconnessi che per le
+comunicazioni si servono di diversi protocolli ormai definiti e consolidati.
+L'esempio di rete che tutti conosciamo è interent che oggigiorno si serve del protocollo IPv4
+per indirizzare le macchine sulla rete. Questo protocollo è limitativo in termini
+di numero, infatti ci troviamo al confronto con la carenza di indirizzi IPv4, In risposta a
+questo problema già da diversi anni è stata proposta una nuova versione del protocollo.
+(forse dovrei mostrare come sono formati gli indirizzi nelle slide)
+IPv6 estende lo spazio di memorizzazione degli indirizzi passando da i 32 bit della versione 4
+a 128bit e com'è ovvio questo permette di avere un maggior numero di indirizzi.
+Uno dei motivi (cha hanno causato un'ascesa così ripida del numero di nodi è il fenomeno)che ci
+porta ad oggi ad avere così tanti nodi autonomi collegati in rete è il fonomeno
+dell'internet o things, si tratta della possibilità di connettere direttamente in rete dispositivi
+che non sono propriamente classificabili come computer ed infatti non lo sono,
+piuttosto parliamo di elettrodomestici dotati di interfacce di rete, memoria e piccoli processori
+che rendono possibile il controllo e la configurazione degli stessi passando, appunto attraverso la rete.
+IPv6 offre un numero talmente grande di indirizzi che lascia spazio alla formulazione di nuovi paradigmi.
+Un esempio si chiama Internet of Threads, l'idea è quella di indirizzare i processi piuttosto che le macchine
+assumendo così una configurazione più simile alla telefonia mobile piuttosto che quella fissa, ovvero non è
+più necessario pensare al luogo in cui una persona possa trovarsi ma semplicemente lo si contatta con il suo numero personale.
+Stessa cosa per i processi, avendo un indirizzo "personale" possono essere contattati in maniera diretta.
+Affinchè i processi possano comunicare direttamente con il proprio indirizzo necessitanto di uno stack di rete interno,
+esistono già progetti disponibili di stack virtuali, progetti come picoTCP, LWIP, LWIPv6.
+Questo paradigma offre il vantaggio di poter cambiare l'host del servizio senza costringere tutti gli utilizzatori al redirect
+verso l'indirizzo della nuova macchina, anzi la migrazione sarebbe completamente trasparente ai client che continueranno a
+contattare sempre lo stesso indirizzo. Inoltre avere stack di rete privati rende difficile se non impossibile la raccolta
+di informazioni sull'elaboratore ospite da possibli attaccanti che cercano di sfruttare le vulnerabilità dei servizi per scalare
+l'intrusione all'interno del sistema.
