@@ -26,3 +26,11 @@ verso l'indirizzo della nuova macchina, anzi la migrazione sarebbe completamente
 contattare sempre lo stesso indirizzo. Inoltre avere stack di rete privati rende difficile se non impossibile la raccolta
 di informazioni sull'elaboratore ospite da possibli attaccanti che cercano di sfruttare le vulnerabilità dei servizi per scalare
 l'intrusione all'interno del sistema.
+Questo ci introduce al motivo per cui si è pensato di creare VSNLib, purtroppo nessuno dei progetti precedenti ha tenuto in considerazione
+l'idea di utilizzare gli strumenti standard di configurazione e quindi ognuno ha creato le proprie funzioni, costringendo così gli sviluppatori
+a dover imparare le configurazioni specifiche in base allo stack in uso.
+L'obbiettivo che questa libreria si propone è quello di permettere all'utente di usare le interfacce standard di linux per configurare anche questi stack
+di rete, questa configurazione avviene attraverso i pacchetti netlink generati da programmi come ip, ad esempio ip addr add 10.0.0.1/24 dev tap0 aggiunge
+l'indirizzo all'interfaccia usando una maschera 24 (255.255.255.0).
+(spiegare netlink)
+Per permettere questa configurazione è necessario innanzi tutto catturare i pacchetti netlink perchè ip è programmato per inviare paccehtti al kernel.
