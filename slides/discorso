@@ -26,6 +26,8 @@ verso l'indirizzo della nuova macchina, anzi la migrazione sarebbe completamente
 contattare sempre lo stesso indirizzo. Inoltre avere stack di rete privati rende difficile se non impossibile la raccolta
 di informazioni sull'elaboratore ospite da possibli attaccanti che cercano di sfruttare le vulnerabilità dei servizi per scalare
 l'intrusione all'interno del sistema.
+
+VSNLib:
 Questo ci introduce al motivo per cui si è pensato di creare VSNLib, purtroppo nessuno dei progetti precedenti ha tenuto in considerazione
 l'idea di utilizzare gli strumenti standard di configurazione e quindi ognuno ha creato le proprie funzioni, costringendo così gli sviluppatori
 a dover imparare le configurazioni specifiche in base allo stack in uso.
@@ -33,4 +35,47 @@ L'obbiettivo che questa libreria si propone è quello di permettere all'utente d
 di rete, questa configurazione avviene attraverso i pacchetti netlink generati da programmi come ip, ad esempio ip addr add 10.0.0.1/24 dev tap0 aggiunge
 l'indirizzo all'interfaccia usando una maschera 24 (255.255.255.0).
 (spiegare netlink)
-Per permettere questa configurazione è necessario innanzi tutto catturare i pacchetti netlink perchè ip è programmato per inviare paccehtti al kernel.
+Per permettere questa configurazione è necessario innanzi tutto catturare i pacchetti netlink perchè ip è programmato per inviare paccehtti al kernel, esistono
+diverse tecniche di cattura delle system call, ad esempio purelibc ma anche progetti come vuos sono in grado di farlo.
+La system call da catturare è la sendto, questa contiene il puntatore ad un'area di memoria contenente il payload con le informazioni di configurazione.
+In questo punto esatto interviene VSNLib, essa mette a disposizione un handle (una maniglia), di fatto una chiamata a funzione, che permette di trasferire
+il pacchetto alla libreria per la gestione e la configurazione dello stack.
+VSNLib è strutturata in modo che sia  modulare e facilmente ampliabile, infatti si compone di un core che gestisce il pacchetto e l'azione da compiere
+e dei moduli specifici per gli stack.
+In fase di caricamento della libreria questa deve essere inizializzata, in questa fase viene richiesto di inserire come argomento alla funzione di init
+il nome del modulo che si intende caricare.
+In sequenza quindi possiamo riconoscere ... fasi:
+init:
+  si occupa di caricare il modulo specifico e inizializzare l'array di puntatori con quelli relativi alle funzioni contenute in esso.
+cattura pacchetto:
+  viene catturato il buffer e chiamato l'handle della libreria.
+core gestione:
+  il pacchetto viene decodificato nel core della libreria e in base alle circostanze vengono fatte le chiamate alle azioni da eseguire.
+chiamata modulo:
+  in base ad un meccanismo di mapping tra azioni e posizione nell'array di funzioni viene eseguita quella specifica del modulo caricato in precedeza, inoltre
+  essendo gli stack tutti diversi tra loro si è pensato ad una struttura generica contenente i dati.
+modulo:
+  i dati vengono elaborati e convertiti secondo le regole dello stack specifico, poi passati alle funzioni adatte a configurarlo e nel frattempo ne vengono
+  collezionate le risposte che serviranno poi a fornire una risposta positiva o negativa al programma che ha generato la richiesta.
+core risposta:
+  di ritorno nel core viene generato il pacchetto netlink di risposta come farebbe il kernel in base ai risultati delle funzioni dello stack.
+I moduli hanno tutti lo stesso numero di funzioni con gli stessi argomenti, questa standardizzazione permette di mantenere lo strato di compatibilità
+con più stack ma è abbastanza generale da essere applicabile a nuovi progetti in quanto normalmente le informazioni per la configurazione di un'interfaccia
+appartenente ad uno stack sono le stesse.
+Quindi ognuno può, seguendo le linee guida, costruire il proprio modulo (magari per uno stack non supportato) ed utilizzarlo attraverso VSNLib.
+
+Conclusioni:
+Sono stati effettuati dei test utilizzando VSNLib ed il modulo di LWIPv6, un semplice client netcat ma con uno stack di rete indipendente e configurato
+attraverso VSNLib e per scopi dimostrativi il pacchetto netlink è stato generato direttamente in C (studiando come il programma iproute generasse il suo),
+in modo fosse più facile, per gli sviluppatori di nuovi moduli, capire la struttura di un pacchetto netlink.
+Il programma esegue perfettamente le operazioni e risponde con dei feedback visivi di riuscita configurazione o di fallimento, il risultato incoraggia
+quindi a continuare lo sviluppo del progetto per riuscire un giorno ad avere una versione trasparente della libreria che allo stato attuale è ancora un
+prototipo ed ancora lontano dall'essere rilasciato in versione ufficiale.
+
+Sviluppi Futuri:
+Sicuramente arrivati ad una versione stabile di questo progetto potrebbe essere utile sviluppare la parte relativa al package filtering in modo tale da gestirlo
+attraverso iptables come nel kernel linux.
+Inoltre resta ancora un piccolo problema relativo all'indice dell'interfaccia che non essendo visibile dal kernel non si riesce a configurare se non passando
+il puntatore al file descripto della stessa.
+
+Domande?
