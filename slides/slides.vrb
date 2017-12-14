@@ -1,10 +1,6 @@
 \frametitle{Sviluppi Futuri}
 \begin{itemize}
-     \item Estensione del supporto server per dispositivi mobili (Android/iOS)
-     \item Stabilità del canale nello streaming audio
-     \item Tempi di avvio del Raspberry Pi Zero W
-     \item Tempi di risposta in VNC on the GO
-     \item Modalità di caricamento delle presentazioni
-     \item Estensione delle possibilità di controllo tramite Piremote
-
+	 	\item Aumento compatibilit\`a con gli stack esistenti, controllo e testing;
+		\item Sviluppo di moduli per eventuali nuovi stack;
+     \item Package Filtering: configurazione attraverso iptables.
  \end{itemize}

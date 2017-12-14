@@ -181,90 +181,66 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
 \begin{frame}[fragile]{FLUSSO}
  \begin{itemize}
    \setlength\itemsep{2em}
-     \item Streaming audio e video
-     \vspace{0.5em}
-        \begin{itemize}
-           \setlength\itemsep{0.5em}
-        \item PulseAudio
-        \end{itemize}
-     \item File system read-only
+     \item Sequenza:
      \vspace{0.5em}
         \begin{itemize}
         \setlength\itemsep{0.5em}
-        \item Motivazioni
-        \item Tabella delle partizioni
-        \item UnionFS
-        \item Abilitare temporaneamente la lettura-scrittura
+        \item Init
+        \item Cattura pacchetto
+        \item Core (gestione e decodifica)
+        \item Chiamata alla funzione del modulo
+				\item Modulo
+				\item Core (risposta)
         \end{itemize}
 
  \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{CORE}
+	\begin{itemize}
+			\item Inizializza la libreria caricando il modulo per lo stack in uso;
+			\item ``Handle'' per il passaggio del pacchetto netlink;
+			\item Decode del pacchetto;
+			\item Chiamata alla funzione del modulo per l'azione richiesta;
+			\item Creazione del netlink di risposta.
 
-\begin{columns}[T]
-    \begin{column}{.37\textwidth}
-    \begin{itemize}
-    \item Uso wireless\newline
-    \small come estensione del Raspberry Pi Wireless Projector
-    \item \normalsize Uso wired\newline
-    \small in caso di disponibilità di soli proiettori tradizionali\\
-    \end{itemize}
-
-    \end{column}
-    \begin{column}{.61\textwidth}
-    \begin{figure}
-        \includegraphics[scale=1.5]{img/setup-with-pizero.png}
-        \caption{Uso wireless.}
-    \end{figure}
-    \end{column}
-\end{columns}
-\vspace{1em}
-
- La configurazione del sistema si basa sulla presenza di una directory predefinita che contiene le presentazioni e uno script che esegue all'avvio tramite file .desktop i programmi necessari per la presentazione: VNC (per uso wireless), Piremote, Evince.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{MODULI}
+	\begin{itemize}
+      \item Stessa struttura;
+      \item Strato di compatibilit\`a con le funzioni particolari degli stack;
+      \item Possibilit\`a di creare nuovi moduli per aumentare la compatibilit\`a con altri stack.
 
-\begin{columns}[T]
-    \begin{column}{.48\textwidth}
-    Disponibile a http://github.com/giulic3/piremote.
+  \end{itemize}
+\end{frame}
 
-    \vspace{1em}
-    Consente lo scorrimento delle pagine nella presentazione corrente, la navigazione all'interno della directory principale e l'apertura di nuove presentazioni.
-
-    \end{column}
-    \begin{column}{.48\textwidth}
-    \begin{figure}
-        \includegraphics[scale=0.41]{img/main_page.jpg}
-        \caption{Pagina di controllo di Piremote}
-    \end{figure}
-    \end{column}
-\end{columns}
+\begin{frame}[fragile]{Test}
+	\begin{itemize}
+\item Il test \`e un client netcat il cui stack \`e stato configurato tramite un pacchetto netlink.\\
+\item Sono visibili i feedback di risposta e la corretta configurazione dello stack \`e dimostrata dal fatto che il client riesce a comunicare con il server
+\end{itemize}
+\begin{figure}[t!]
+\includegraphics[scale=0.28]{img/test6_b}
+\caption{netlink}
+\end{figure}
 \end{frame}
 
 \begin{frame}[fragile]{Conclusioni}
  \begin{itemize}
-     \item Estensione del supporto server per dispositivi mobili (Android/iOS)
-     \item Stabilità del canale nello streaming audio
-     \item Tempi di avvio del Raspberry Pi Zero W
-     \item Tempi di risposta in VNC on the GO
-     \item Modalità di caricamento delle presentazioni
-     \item Estensione delle possibilità di controllo tramite Piremote
-
+     \item I test effetuati indicano la riuscita della configurazione;
+     \item VSNLib \`e ancora un prototipo ma i risultati sono incoraggianti;
+     \item L'obiettivo finale \`e quello di avere una libreria completa e trasparente.
  \end{itemize}
 \end{frame}
 
 
 \begin{frame}[fragile]{Sviluppi Futuri}
  \begin{itemize}
-     \item Estensione del supporto server per dispositivi mobili (Android/iOS)
-     \item Stabilità del canale nello streaming audio
-     \item Tempi di avvio del Raspberry Pi Zero W
-     \item Tempi di risposta in VNC on the GO
-     \item Modalità di caricamento delle presentazioni
-     \item Estensione delle possibilità di controllo tramite Piremote
-
+	 	\item Aumento compatibilit\`a con gli stack esistenti, controllo e testing;
+		\item Sviluppo di moduli per eventuali nuovi stack;
+     \item Package Filtering: configurazione attraverso iptables.
  \end{itemize}
 \end{frame}
 
@@ -273,6 +249,8 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
 
 \begin{center}
 \LARGE Grazie per l'attenzione\\
+\vspace{1em}
+
 Domande?
 \end{center}
 \end{frame}
