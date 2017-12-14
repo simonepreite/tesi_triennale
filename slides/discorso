@@ -1,64 +1,76 @@
+Pre-Intro:
+Per questo lavoro di tesi è stato creato un prototipo di libreria che ha come obiettivo
+quello di rendere più agevole la configurazione e l'utilizzo di stack di rete virtuali.
+
 Intro:
 Una rete di elaboratori si definisce come un sistema di calcolatori interconnessi che per le
-comunicazioni si servono di diversi protocolli ormai definiti e consolidati.
-L'esempio di rete che tutti conosciamo è interent che oggigiorno si serve del protocollo IPv4
-per indirizzare le macchine sulla rete. Questo protocollo è limitativo in termini
-di numero, infatti ci troviamo al confronto con la carenza di indirizzi IPv4, In risposta a
-questo problema già da diversi anni è stata proposta una nuova versione del protocollo.
+comunicazioni si servono di diversi protocolli.
+Un esempio di rete che tutti conosciamo è interent, oggigiorno si serve prevalentemente del protocollo IPv4
+per indirizzare le macchine sulla rete. Questo protocollo è limitativo ed infatti ci troviamo al confronto
+con la carenza di indirizzi IPv4, In risposta a questo problema già da diversi anni è stata proposta una nuova
+versione del protocollo.
 (forse dovrei mostrare come sono formati gli indirizzi nelle slide)
-IPv6 estende lo spazio di memorizzazione degli indirizzi passando da i 32 bit della versione 4
+IPv6 estende lo spazio di memorizzazione degli indirizzi passando da 32 bit della versione 4
 a 128bit e com'è ovvio questo permette di avere un maggior numero di indirizzi.
-Uno dei motivi (cha hanno causato un'ascesa così ripida del numero di nodi è il fenomeno)che ci
-porta ad oggi ad avere così tanti nodi autonomi collegati in rete è il fonomeno
-dell'internet o things, si tratta della possibilità di connettere direttamente in rete dispositivi
+Tra i motivi che hanno causato un'ascesa così ripida del numero di nodi spicca il fenomeno
+dell'Internet of Things, si tratta della possibilità di connettere direttamente in rete dispositivi
 che non sono propriamente classificabili come computer ed infatti non lo sono,
 piuttosto parliamo di elettrodomestici dotati di interfacce di rete, memoria e piccoli processori
 che rendono possibile il controllo e la configurazione degli stessi passando, appunto attraverso la rete.
 IPv6 offre un numero talmente grande di indirizzi che lascia spazio alla formulazione di nuovi paradigmi.
-Un esempio si chiama Internet of Threads, l'idea è quella di indirizzare i processi piuttosto che le macchine
+Ad esempio Internet of Threads, l'idea è quella di indirizzare i processi piuttosto che le macchine
 assumendo così una configurazione più simile alla telefonia mobile piuttosto che quella fissa, ovvero non è
 più necessario pensare al luogo in cui una persona possa trovarsi ma semplicemente lo si contatta con il suo numero personale.
-Stessa cosa per i processi, avendo un indirizzo "personale" possono essere contattati in maniera diretta.
+Stessa cosa per i processi, avendo un indirizzo "personale" possono essere direttamente raggiunti.
 Affinchè i processi possano comunicare direttamente con il proprio indirizzo necessitanto di uno stack di rete interno,
 esistono già progetti disponibili di stack virtuali, progetti come picoTCP, LWIP, LWIPv6.
 Questo paradigma offre il vantaggio di poter cambiare l'host del servizio senza costringere tutti gli utilizzatori al redirect
 verso l'indirizzo della nuova macchina, anzi la migrazione sarebbe completamente trasparente ai client che continueranno a
 contattare sempre lo stesso indirizzo. Inoltre avere stack di rete privati rende difficile se non impossibile la raccolta
-di informazioni sull'elaboratore ospite da possibli attaccanti che cercano di sfruttare le vulnerabilità dei servizi per scalare
+di informazioni sull'elaboratore ospite da eventuali attaccanti che cercano di sfruttare le vulnerabilità dei servizi per scalare
 l'intrusione all'interno del sistema.
 
 VSNLib:
 Questo ci introduce al motivo per cui si è pensato di creare VSNLib, purtroppo nessuno dei progetti precedenti ha tenuto in considerazione
 l'idea di utilizzare gli strumenti standard di configurazione e quindi ognuno ha creato le proprie funzioni, costringendo così gli sviluppatori
-a dover imparare le configurazioni specifiche in base allo stack in uso.
+a dover apprendere le configurazioni specifiche in base allo stack in uso.
 L'obbiettivo che questa libreria si propone è quello di permettere all'utente di usare le interfacce standard di linux per configurare anche questi stack
-di rete, questa configurazione avviene attraverso i pacchetti netlink generati da programmi come ip, ad esempio ip addr add 10.0.0.1/24 dev tap0 aggiunge
+di rete, la configurazione avviene attraverso i pacchetti netlink generati da programmi come ip, ad esempio ip addr add 10.0.0.1/24 dev tap0 aggiunge
 l'indirizzo all'interfaccia usando una maschera 24 (255.255.255.0).
+
 (spiegare netlink)
+netlink è un protocollo di Inter Process Communication (IPC) interno al kernel linux proposto in sostituzione di ioctl per la configurazione delle
+interfacce.
+Funziona tramite socket di tipo netlink ed un sistema di porte che prendono il valore dal pid del processo, ad esempio per comunicare con il kernel
+si inviano messaggi sulla porta 0.
+//immagine nella slide//
+(fine netlink)
+
 Per permettere questa configurazione è necessario innanzi tutto catturare i pacchetti netlink perchè ip è programmato per inviare paccehtti al kernel, esistono
 diverse tecniche di cattura delle system call, ad esempio purelibc ma anche progetti come vuos sono in grado di farlo.
-La system call da catturare è la sendto, questa contiene il puntatore ad un'area di memoria contenente il payload con le informazioni di configurazione.
-In questo punto esatto interviene VSNLib, essa mette a disposizione un handle (una maniglia), di fatto una chiamata a funzione, che permette di trasferire
+La system call da catturare è la sendto, che contiene il puntatore al payload con le informazioni di configurazione.
+In questo punto interviene VSNLib, attraverso un handle (una maniglia), di fatto una chiamata a funzione, che permette di trasferire
 il pacchetto alla libreria per la gestione e la configurazione dello stack.
 VSNLib è strutturata in modo che sia  modulare e facilmente ampliabile, infatti si compone di un core che gestisce il pacchetto e l'azione da compiere
 e dei moduli specifici per gli stack.
 In fase di caricamento della libreria questa deve essere inizializzata, in questa fase viene richiesto di inserire come argomento alla funzione di init
 il nome del modulo che si intende caricare.
-In sequenza quindi possiamo riconoscere ... fasi:
-init:
+In sequenza quindi possiamo riconoscere 6 fasi:
+1) init:
   si occupa di caricare il modulo specifico e inizializzare l'array di puntatori con quelli relativi alle funzioni contenute in esso.
-cattura pacchetto:
+2) cattura pacchetto:
   viene catturato il buffer e chiamato l'handle della libreria.
-core gestione:
+3) core gestione:
   il pacchetto viene decodificato nel core della libreria e in base alle circostanze vengono fatte le chiamate alle azioni da eseguire.
-chiamata modulo:
+4) chiamata modulo:
   in base ad un meccanismo di mapping tra azioni e posizione nell'array di funzioni viene eseguita quella specifica del modulo caricato in precedeza, inoltre
   essendo gli stack tutti diversi tra loro si è pensato ad una struttura generica contenente i dati.
-modulo:
+5) modulo:
   i dati vengono elaborati e convertiti secondo le regole dello stack specifico, poi passati alle funzioni adatte a configurarlo e nel frattempo ne vengono
-  collezionate le risposte che serviranno poi a fornire una risposta positiva o negativa al programma che ha generato la richiesta.
-core risposta:
-  di ritorno nel core viene generato il pacchetto netlink di risposta come farebbe il kernel in base ai risultati delle funzioni dello stack.
+  collezionate i valori di ritorno che serviranno poi a fornire una risposta positiva o negativa al programma che ha generato la richiesta.
+6) core risposta:
+  infine nel core viene generato il pacchetto netlink come farebbe il kernel in base ai risultati delle funzioni dello stack da spedire al programma
+  che aveva generato la richiesta.
 I moduli hanno tutti lo stesso numero di funzioni con gli stessi argomenti, questa standardizzazione permette di mantenere lo strato di compatibilità
 con più stack ma è abbastanza generale da essere applicabile a nuovi progetti in quanto normalmente le informazioni per la configurazione di un'interfaccia
 appartenente ad uno stack sono le stesse.

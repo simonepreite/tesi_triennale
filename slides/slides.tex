@@ -1,339 +1,320 @@
-\documentclass[10pt]{beamer}
+\documentclass{beamer}
+\usetheme[language=italian,
+		  bullet=triangle,
+		  color=blue,
+		  titleline=true,
+		  notshowauthor=true,
+		  notshowtitle=true
+         ]{TorinoTh}
+\setbeamertemplate{caption}[numbered] % per avere fig. numerate nelle caption
+\makeatletter
+\renewcommand{\fnum@figure}{Fig. \thefigure} %per avere fig. invece che figura
+\makeatother
+\usepackage[beamer,customcolors]{hf-tikz}
+\usepackage{graphicx}
+\usepackage[font={footnotesize}]{caption}
+\usepackage{wrapfig}
 
-\usetheme[progressbar=frametitle]{metropolis}
-\usepackage{appendixnumberbeamer}
+\hfsetfillcolor{alerted text.fg!10}
+\hfsetbordercolor{alerted text.fg}
 
-\usepackage{booktabs}
-\usepackage[scale=2]{ccicons}
+\begin{center}
+\small Alma Mater Studiorum - Università di Bologna
+\end{center}
+\begin{center}
+\small Scuola di Scienze - Corso di Laurea in Informatica
+\end{center}
 
-\usepackage{pgfplots}
-\usepgfplotslibrary{dateplot}
+\author{Simone Preite}
+\rel{Renzo Davoli}
+\title{VSNLib: un'interfaccia unica di configurazione per stack virtuali tramite pacchetti netlink}
+\ateneo{Università di Bologna}
 
-\usepackage{xspace}
-\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+%\date{Sessione II\\
+%Anno Accademico 2016/2017\\ \\
+%11 ottobre 2017} lo voglio fare uguale al frontespizio della tesi TODO
 
-\title{Metropolis}
-\subtitle{A modern beamer theme}
-% \date{\today}
-\date{}
-\author{Matthias Vogelgesang}
-\institute{Center for modern beamer themes}
-% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+\date{20 dicembre 2017}
 
 \begin{document}
 
-\maketitle
+\titlepageframe % Specific command
 
-\begin{frame}{Table of contents}
-  \setbeamertemplate{section in toc}[sections numbered]
-  \tableofcontents[hideallsubsections]
+
+\begin{frame}[fragile]{Intro}
+Il lavoro di tesi riguarda lo sviluppo di una libreria utile per facilitare la configurazione degli stack di rete virtuali  agli sviluppatori che intendono farne uso.
 \end{frame}
 
-\section{Introduction}
+\begin{frame}[fragile]{IPv6 vs IPv4}
 
-\begin{frame}[fragile]{Metropolis}
-
-  The \themename theme is a Beamer theme with minimal visual noise
-  inspired by the \href{https://github.com/hsrmbeamertheme/hsrmbeamertheme}{\textsc{hsrm} Beamer
-  Theme} by Benjamin Weiss.
-
-  Enable the theme by loading
-
-  \begin{verbatim}    \documentclass{beamer}
-    \usetheme{metropolis}\end{verbatim}
-
-  Note, that you have to have Mozilla's \emph{Fira Sans} font and XeTeX
-  installed to enjoy this wonderful typography.
-\end{frame}
-\begin{frame}[fragile]{Sections}
-  Sections group slides of the same topic
-
-  \begin{verbatim}    \section{Elements}\end{verbatim}
-
-  for which \themename provides a nice progress indicator \ldots
+\begin{itemize}
+    \item IPv4 \`e insufficiente per fronteggiare la necessit\`a di nuovi indirizzi;
+    \item Nodi sulla rete in continua ascesa, necessitano di nuovi indirizzi;
+    \item IPv6: soluzione proposta gi\`a da diversi anni ma non ancora di largo utilizzo.
+\end{itemize}
 \end{frame}
 
-\section{Titleformats}
 
-\begin{frame}{Metropolis titleformats}
-	\themename supports 4 different titleformats:
+\begin{frame}[fragile]{IoT}
+
+\begin{columns}[T]
+\begin{column}{.30\textwidth}
+\newline
+\begin{itemize}
+    \item Connessione dispositivi comuni alla rete\newline
+		\item Aumento esponenziale dei nodi\newline
+
+\end{itemize}
+
+\end{column}%
+\hfill%
+\begin{column}{.50\textwidth}
+    \begin{figure}[t!]
+    \includegraphics[scale=.08]{img/IoT.png}
+    \caption{Internet of Things}
+    \centering
+
+\end{figure}
+\end{column}%non mi piacciono le immagini
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{IoTh}
+	\begin{columns}[T]
+	\begin{column}{.40\textwidth}
+	    \begin{figure}[t!]
+	    \includegraphics[scale=0.35]{img/new_stack.png}
+	    \caption{Internet of Things}
+	    \centering
+
+	\end{figure}
+	\end{column}%non mi piacciono le immagini
+	\hfill%
+	\begin{column}{.60\textwidth}
+	\newline
 	\begin{itemize}
-		\item Regular
-		\item \textsc{Smallcaps}
-		\item \textsc{allsmallcaps}
-		\item ALLCAPS
+	    \item Connessione di processi direttamente alla rete\newline
+			\item Possibile grazie al gran numero di indirizzi IPv6\newline
+			\item Paradigma simile alla telefonia mobile rispetto a quella fissa\newline
+			\item \`E possibile trasferire processi da un capo all'altro del mondo senza problemi di indirizzamento e senza che il client si renda conto di nulla\newline
 	\end{itemize}
-	They can either be set at once for every title type or individually.
+
+	\end{column}%
+	\end{columns}
 \end{frame}
 
-{
-    \metroset{titleformat frame=smallcaps}
-\begin{frame}{Small caps}
-	This frame uses the \texttt{smallcaps} titleformat.
+\begin{frame}[fragile]{Stack Virtuali}
 
-	\begin{alertblock}{Potential Problems}
-		Be aware, that not every font supports small caps. If for example you typeset your presentation with pdfTeX and the Computer Modern Sans Serif font, every text in smallcaps will be typeset with the Computer Modern Serif font instead.
-	\end{alertblock}
-\end{frame}
-}
 
-{
-\metroset{titleformat frame=allsmallcaps}
-\begin{frame}{All small caps}
-	This frame uses the \texttt{allsmallcaps} titleformat.
+		\begin{columns}[T]
+		\begin{column}{.40\textwidth}
+			\begin{minipage}[c][0.6\textheight]{\linewidth}
+		 \begin{figure}[t!]
+		    \includegraphics[scale=0.2]{img/lwip}
+			    \caption{LWIP}
+			\end{figure}
+				\begin{figure}[t!]
+		    \includegraphics[scale=0.2]{img/picoTCP.png}
+		    \caption{picoTCP}
+			\end{figure}
+\end{minipage}
+		    \centering
 
-	\begin{alertblock}{Potential problems}
-		As this titleformat also uses smallcaps you face the same problems as with the \texttt{smallcaps} titleformat. Additionally this format can cause some other problems. Please refer to the documentation if you consider using it.
+		\end{column}
+		\hfill%
+		\begin{column}{.60\textwidth}
+		\newline
+		\begin{itemize}
+		    \item PicoTCP\newline
+				\item LightWeight IP (LWIP)\newline
+				\item LightWeight IPv6 (LWIPv6)\newline
 
-		As a rule of thumb: Just use it for plaintext-only titles.
-	\end{alertblock}
-\end{frame}
-}
+		\end{itemize}
 
-{
-\metroset{titleformat frame=allcaps}
-\begin{frame}{All caps}
-	This frame uses the \texttt{allcaps} titleformat.
+		\end{column}%
+		\end{columns}
+		\vspace{1em}
 
-	\begin{alertblock}{Potential Problems}
-		This titleformat is not as problematic as the \texttt{allsmallcaps} format, but basically suffers from the same deficiencies. So please have a look at the documentation if you want to use it.
-	\end{alertblock}
-\end{frame}
-}
-
-\section{Elements}
-
-\begin{frame}[fragile]{Typography}
-      \begin{verbatim}The theme provides sensible defaults to
-\emph{emphasize} text, \alert{accent} parts
-or show \textbf{bold} results.\end{verbatim}
-
-  \begin{center}becomes\end{center}
-
-  The theme provides sensible defaults to \emph{emphasize} text,
-  \alert{accent} parts or show \textbf{bold} results.
-\end{frame}
-
-\begin{frame}{Font feature test}
-  \begin{itemize}
-    \item Regular
-    \item \textit{Italic}
-    \item \textsc{SmallCaps}
-    \item \textbf{Bold}
-    \item \textbf{\textit{Bold Italic}}
-    \item \textbf{\textsc{Bold SmallCaps}}
-    \item \texttt{Monospace}
-    \item \texttt{\textit{Monospace Italic}}
-    \item \texttt{\textbf{Monospace Bold}}
-    \item \texttt{\textbf{\textit{Monospace Bold Italic}}}
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Lists}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.33\textwidth}
-      Items
-      \begin{itemize}
-        \item Milk \item Eggs \item Potatos
-      \end{itemize}
-
-    \column{0.33\textwidth}
-      Enumerations
-      \begin{enumerate}
-        \item First, \item Second and \item Last.
-      \end{enumerate}
-
-    \column{0.33\textwidth}
-      Descriptions
-      \begin{description}
-        \item[PowerPoint] Meeh. \item[Beamer] Yeeeha.
-      \end{description}
-  \end{columns}
-\end{frame}
-\begin{frame}{Animation}
-  \begin{itemize}[<+- | alert@+>]
-    \item \alert<4>{This is\only<4>{ really} important}
-    \item Now this
-    \item And now this
-  \end{itemize}
-\end{frame}
-\begin{frame}{Figures}
-  \begin{figure}
-    \newcounter{density}
-    \setcounter{density}{20}
-    \begin{tikzpicture}
-      \def\couleur{alerted text.fg}
-      \path[coordinate] (0,0)  coordinate(A)
-                  ++( 90:5cm) coordinate(B)
-                  ++(0:5cm) coordinate(C)
-                  ++(-90:5cm) coordinate(D);
-      \draw[fill=\couleur!\thedensity] (A) -- (B) -- (C) --(D) -- cycle;
-      \foreach \x in {1,...,40}{%
-          \pgfmathsetcounter{density}{\thedensity+20}
-          \setcounter{density}{\thedensity}
-          \path[coordinate] coordinate(X) at (A){};
-          \path[coordinate] (A) -- (B) coordinate[pos=.10](A)
-                              -- (C) coordinate[pos=.10](B)
-                              -- (D) coordinate[pos=.10](C)
-                              -- (X) coordinate[pos=.10](D);
-          \draw[fill=\couleur!\thedensity] (A)--(B)--(C)-- (D) -- cycle;
-      }
-    \end{tikzpicture}
-    \caption{Rotated square from
-    \href{http://www.texample.net/tikz/examples/rotated-polygons/}{texample.net}.}
-  \end{figure}
-\end{frame}
-\begin{frame}{Tables}
-  \begin{table}
-    \caption{Largest cities in the world (source: Wikipedia)}
-    \begin{tabular}{lr}
-      \toprule
-      City & Population\\
-      \midrule
-      Mexico City & 20,116,842\\
-      Shanghai & 19,210,000\\
-      Peking & 15,796,450\\
-      Istanbul & 14,160,467\\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-\end{frame}
-\begin{frame}{Blocks}
-  Three different block environments are pre-defined and may be styled with an
-  optional background color.
-
-  \begin{columns}[T,onlytextwidth]
-    \column{0.5\textwidth}
-      \begin{block}{Default}
-        Block content.
-      \end{block}
-
-      \begin{alertblock}{Alert}
-        Block content.
-      \end{alertblock}
-
-      \begin{exampleblock}{Example}
-        Block content.
-      \end{exampleblock}
-
-    \column{0.5\textwidth}
-
-      \metroset{block=fill}
-
-      \begin{block}{Default}
-        Block content.
-      \end{block}
-
-      \begin{alertblock}{Alert}
-        Block content.
-      \end{alertblock}
-
-      \begin{exampleblock}{Example}
-        Block content.
-      \end{exampleblock}
-
-  \end{columns}
-\end{frame}
-\begin{frame}{Math}
-  \begin{equation*}
-    e = \lim_{n\to \infty} \left(1 + \frac{1}{n}\right)^n
-  \end{equation*}
-\end{frame}
-\begin{frame}{Line plots}
-  \begin{figure}
-    \begin{tikzpicture}
-      \begin{axis}[
-        mlineplot,
-        width=0.9\textwidth,
-        height=6cm,
-      ]
-
-        \addplot {sin(deg(x))};
-        \addplot+[samples=100] {sin(deg(2*x))};
-
-      \end{axis}
-    \end{tikzpicture}
-  \end{figure}
-\end{frame}
-\begin{frame}{Bar charts}
-  \begin{figure}
-    \begin{tikzpicture}
-      \begin{axis}[
-        mbarplot,
-        xlabel={Foo},
-        ylabel={Bar},
-        width=0.9\textwidth,
-        height=6cm,
-      ]
-
-      \addplot plot coordinates {(1, 20) (2, 25) (3, 22.4) (4, 12.4)};
-      \addplot plot coordinates {(1, 18) (2, 24) (3, 23.5) (4, 13.2)};
-      \addplot plot coordinates {(1, 10) (2, 19) (3, 25) (4, 15.2)};
-
-      \legend{lorem, ipsum, dolor}
-
-      \end{axis}
-    \end{tikzpicture}
-  \end{figure}
-\end{frame}
-\begin{frame}{Quotes}
-  \begin{quote}
-    Veni, Vidi, Vici
-  \end{quote}
-\end{frame}
-
-{%
-\setbeamertemplate{frame footer}{My custom footer}
-\begin{frame}[fragile]{Frame footer}
-    \themename defines a custom beamer template to add a text to the footer. It can be set via
-    \begin{verbatim}\setbeamertemplate{frame footer}{My custom footer}\end{verbatim}
-\end{frame}
-}
-
-\begin{frame}{References}
-  Some references to showcase [allowframebreaks] \cite{knuth92,ConcreteMath,Simpson,Er01,greenwade93}
-\end{frame}
-
-\section{Conclusion}
-
-\begin{frame}{Summary}
-
-  Get the source of this theme and the demo presentation from
-
-  \begin{center}\url{github.com/matze/mtheme}\end{center}
-
-  The theme \emph{itself} is licensed under a
-  \href{http://creativecommons.org/licenses/by-sa/4.0/}{Creative Commons
-  Attribution-ShareAlike 4.0 International License}.
-
-  \begin{center}\ccbysa\end{center}
+		progetti di stack esistenti che permettono ai processi di comunicare tramite indirizzo personale
 
 \end{frame}
 
-{\setbeamercolor{palette primary}{fg=black, bg=yellow}
-\begin{frame}[standout]
-  Questions?
-\end{frame}
-}
+\begin{frame}[fragile]{VSNLib}
 
-\appendix
+Obiettivi di VSNLib:\newline
+\begin{itemize}
+    \item Windows (TightVNC)
+    \item macOS (Vine Server/OSXvnc)
+    \item GNU/Linux (x11vnc)
 
-\begin{frame}[fragile]{Backup slides}
-  Sometimes, it is useful to add slides at the end of your presentation to
-  refer to during audience questions.
+\end{itemize}
 
-  The best way to do this is to include the \verb|appendixnumberbeamer|
-  package in your preamble and call \verb|\appendix| before your backup slides.
-
-  \themename will automatically turn off slide numbering and progress bars for
-  slides in the appendix.
+\begin{itemize}
+    \item hostname
+    \item modifica della risoluzione
+    \item riduzione della parte di schermo da condividere
+\end{itemize}
 \end{frame}
 
-\begin{frame}[allowframebreaks]{References}
+\begin{frame}[fragile]{NETLINK}
+	\begin{figure}[t!]
+	\includegraphics[scale=0.4]{img/netlink_comunication}
+	\caption{netlink}
+	\end{figure}
+	\vspace{1em}
+Netlink \`e un sistema di Inter Process Comminication (IPC), ovvero permette ai processi di scambiarsi messaggi.\\
+Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.\\
+ %\begin{itemize}
+    %\setlength\itemsep{2em}
+    % \item Startup\newline
+    % il client VNC viene eseguito in automatico all'avvio tramite creazione di desktop entry
+%
+  %   \item Indirizzo IP statico\newline
+  %   viene abilitato modificando il file di configurazione del demone dhcpcd
+  %   \item Blank screen\newline
+  %   viene disabilitato agendo sul file di configurazione di LightDM, il display manager
+ %\end{itemize}
 
-  \bibliography{demo}
-  \bibliographystyle{abbrv}
+ %%TODO magari dividere in due colonne e a dx mettere i listings...
+\end{frame}
+
+\begin{frame}[fragile]{FLUSSO}
+ \begin{itemize}
+   \setlength\itemsep{2em}
+     \item Streaming audio e video
+     \vspace{0.5em}
+        \begin{itemize}
+           \setlength\itemsep{0.5em}
+        \item PulseAudio
+        \end{itemize}
+     \item File system read-only
+     \vspace{0.5em}
+        \begin{itemize}
+        \setlength\itemsep{0.5em}
+        \item Motivazioni
+        \item Tabella delle partizioni
+        \item UnionFS
+        \item Abilitare temporaneamente la lettura-scrittura
+        \end{itemize}
+
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{CORE}
+
+\begin{columns}[T]
+    \begin{column}{.37\textwidth}
+    \begin{itemize}
+    \item Uso wireless\newline
+    \small come estensione del Raspberry Pi Wireless Projector
+    \item \normalsize Uso wired\newline
+    \small in caso di disponibilità di soli proiettori tradizionali\\
+    \end{itemize}
+
+    \end{column}
+    \begin{column}{.61\textwidth}
+    \begin{figure}
+        \includegraphics[scale=1.5]{img/setup-with-pizero.png}
+        \caption{Uso wireless.}
+    \end{figure}
+    \end{column}
+\end{columns}
+\vspace{1em}
+
+ La configurazione del sistema si basa sulla presenza di una directory predefinita che contiene le presentazioni e uno script che esegue all'avvio tramite file .desktop i programmi necessari per la presentazione: VNC (per uso wireless), Piremote, Evince.
+\end{frame}
+
+\begin{frame}[fragile]{MODULI}
+
+\begin{columns}[T]
+    \begin{column}{.48\textwidth}
+    Disponibile a http://github.com/giulic3/piremote.
+
+    \vspace{1em}
+    Consente lo scorrimento delle pagine nella presentazione corrente, la navigazione all'interno della directory principale e l'apertura di nuove presentazioni.
+
+    \end{column}
+    \begin{column}{.48\textwidth}
+    \begin{figure}
+        \includegraphics[scale=0.41]{img/main_page.jpg}
+        \caption{Pagina di controllo di Piremote}
+    \end{figure}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Conclusioni}
+ \begin{itemize}
+     \item Estensione del supporto server per dispositivi mobili (Android/iOS)
+     \item Stabilità del canale nello streaming audio
+     \item Tempi di avvio del Raspberry Pi Zero W
+     \item Tempi di risposta in VNC on the GO
+     \item Modalità di caricamento delle presentazioni
+     \item Estensione delle possibilità di controllo tramite Piremote
+
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Sviluppi Futuri}
+ \begin{itemize}
+     \item Estensione del supporto server per dispositivi mobili (Android/iOS)
+     \item Stabilità del canale nello streaming audio
+     \item Tempi di avvio del Raspberry Pi Zero W
+     \item Tempi di risposta in VNC on the GO
+     \item Modalità di caricamento delle presentazioni
+     \item Estensione delle possibilità di controllo tramite Piremote
+
+ \end{itemize}
+\end{frame}
+
+
+\begin{frame}[c]
+
+\begin{center}
+\LARGE Grazie per l'attenzione\\
+Domande?
+\end{center}
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Approfondimento: Limitazioni dei proiettori wireless}
+
+Riguardano:\newline
+
+\begin{itemize}
+
+\item La tipologia di file trasmessi, con la mancanza di supporto video o risultati non soddisfacenti nella riproduzione
+\item Le modalità di connessione, quando il servizio non è integrato in una rete esistente ma è richiesta la creazione di una rete ad hoc
+\item Hardware aggiuntivo (es. adattatori USB) necessario per il funzionamento
+\item I costi elevati, con differenze tra proiettori con WiFi built-in e proiettori tradizionali potenziati da adattatori wireless.
+
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[plain, noframenumbering]{Approfondimento: File system e UnionFS}
+
+\begin{itemize}
+\item Tipo di file system che supporta union mount
+\item È utilizzato per sovrapporre ad un sistema in sola lettura, un file system temporaneo memorizzato in RAM
+\item Di conseguenza ogni scrittura avviene in RAM e verrà persa ad ogni riavvio, evitando potenziali scritture dannose su memoria SD.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Approfondimento: Piremote}
+
+\begin{itemize}
+
+\item Realizzato in Python, Javascript per il frontend
+\item È basato su un modulo che consente il controllo completo di mouse e tastiera
+\item Piremote può essere eseguito da riga di comando eventualmente specificando i parametri \textit{address}, \textit{port}, \textit{key}.
+
+\end{itemize}
 
 \end{frame}
+
+
+
 
 \end{document}

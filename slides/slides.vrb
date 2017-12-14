@@ -1,9 +1,10 @@
-\frametitle{Backup slides}
-Sometimes, it is useful to add slides at the end of your presentation to
-  refer to during audience questions.
+\frametitle{Sviluppi Futuri}
+\begin{itemize}
+     \item Estensione del supporto server per dispositivi mobili (Android/iOS)
+     \item Stabilità del canale nello streaming audio
+     \item Tempi di avvio del Raspberry Pi Zero W
+     \item Tempi di risposta in VNC on the GO
+     \item Modalità di caricamento delle presentazioni
+     \item Estensione delle possibilità di controllo tramite Piremote
 
-  The best way to do this is to include the \verb|appendixnumberbeamer|
-  package in your preamble and call \verb|\appendix| before your backup slides.
-
-  \themename will automatically turn off slide numbering and progress bars for
-  slides in the appendix.
+ \end{itemize}
