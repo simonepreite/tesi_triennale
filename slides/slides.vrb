@@ -1,6 +1,6 @@
 \frametitle{Sviluppi Futuri}
 \begin{itemize}
-	 	\item Aumento compatibilit\`a con gli stack esistenti, controllo e testing;
-		\item Sviluppo di moduli per eventuali nuovi stack;
+	 	\item Aumento compatibilit\`a con gli stack esistenti, controllo e testing;\newline
+		\item Sviluppo di moduli per eventuali nuovi stack;\newline
      \item Package Filtering: configurazione attraverso iptables.
  \end{itemize}

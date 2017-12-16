@@ -41,7 +41,7 @@
 \titlepageframe % Specific command
 
 
-\begin{frame}[fragile]{Intro}
+\begin{frame}[fragile]{Introduzione}
 Il lavoro di tesi riguarda lo sviluppo di una libreria utile per facilitare la configurazione degli stack di rete virtuali  agli sviluppatori che intendono farne uso.
 \end{frame}
 
@@ -49,9 +49,27 @@ Il lavoro di tesi riguarda lo sviluppo di una libreria utile per facilitare la c
 
 \begin{itemize}
     \item IPv4 \`e insufficiente per fronteggiare la necessit\`a di nuovi indirizzi;
-    \item Nodi sulla rete in continua ascesa, necessitano di nuovi indirizzi;
+    \item Il numero di nodi sulla rete in continua ascesa, necessitano di nuovi indirizzi;
     \item IPv6: soluzione proposta gi\`a da diversi anni ma non ancora di largo utilizzo.
 \end{itemize}
+\begin{table}[h]                        %ambiente tabella
+                                        %(serve per avere la legenda)
+\begin{center}                          %centra nella pagina la tabella
+\begin{tabular}{r|c|c|c}                  %tre colonne con righe verticali
+                                        %   prodotte con |
+\hline
+IP $\langle version \rangle$ & 80 bit & 16 bit & 32 bit\\
+\hline \hline                         %inserisce due righe orizzontali
+$IPv4$ &   &   & $192.168.1.2$\\           %& separa le colonne e con
+\hline                                  %inserisce una riga orizzontale
+$IPv6$ & $00000000.00000000.0000$ & $FFFF$ & $192.168.1.2$\\           %  \\ va a capo
+\hline                                  %inserisce una riga orizzontale
+$IPv6$ & $00000000.00000000.0000$ & $FFFF$ & $C0A80102$\\
+\hline                           %inserisce due righe orizzontali
+\end{tabular}
+\caption[IPv4 to IPv6 conversion]{rappresentazione di un indirizzo IPv4 in IPv6}\label{tab:IPv4toIPv6}
+\end{center}
+\end{table}
 \end{frame}
 
 
@@ -61,8 +79,8 @@ Il lavoro di tesi riguarda lo sviluppo di una libreria utile per facilitare la c
 \begin{column}{.30\textwidth}
 \newline
 \begin{itemize}
-    \item Connessione dispositivi comuni alla rete\newline
-		\item Aumento esponenziale dei nodi\newline
+    \item Connessione dispositivi comuni alla rete;\newline
+		\item Aumento esponenziale dei nodi.\newline
 
 \end{itemize}
 
@@ -93,10 +111,10 @@ Il lavoro di tesi riguarda lo sviluppo di una libreria utile per facilitare la c
 	\begin{column}{.60\textwidth}
 	\newline
 	\begin{itemize}
-	    \item Connessione di processi direttamente alla rete\newline
-			\item Possibile grazie al gran numero di indirizzi IPv6\newline
-			\item Paradigma simile alla telefonia mobile rispetto a quella fissa\newline
-			\item \`E possibile trasferire processi da un capo all'altro del mondo senza problemi di indirizzamento e senza che il client si renda conto di nulla\newline
+	    \item Connessione di processi direttamente alla rete;\newline
+			\item Possibile grazie al gran numero di indirizzi IPv6;\newline
+			\item Paradigma simile alla telefonia mobile rispetto a quella fissa;\newline
+			\item \`E possibile trasferire processi da un capo all'altro del mondo senza problemi di indirizzamento e senza che il client si renda conto di nulla.\newline
 	\end{itemize}
 
 	\end{column}%
@@ -141,22 +159,19 @@ Il lavoro di tesi riguarda lo sviluppo di una libreria utile per facilitare la c
 
 \begin{frame}[fragile]{VSNLib}
 
-Obiettivi di VSNLib:\newline
+Perch\`e:\newline
 \begin{itemize}
-    \item Windows (TightVNC)
-    \item macOS (Vine Server/OSXvnc)
-    \item GNU/Linux (x11vnc)
-
+    \item Uniformit\`a dell'interfaccia di configurazione;
+    \item Facilitare gli sviluppatori che si approcciano a questa tecnologia;
+    \item Immediatezza: non \`e necessario studiare come la libreria debba essere configurata.
 \end{itemize}
-
-\begin{itemize}
-    \item hostname
-    \item modifica della risoluzione
-    \item riduzione della parte di schermo da condividere
-\end{itemize}
+\vspace{1em}
+Si vuole dare la possibilit\`a al programmatore di usare programmi come\\\vspace{1em} \centering{\textit{\textbf{ip addr add 10.0.0.1/24 dev tap0}}} \\
+\vspace{1em}
+per configurare lo stack, come farebbe all'interno di un sistema linux.
 \end{frame}
 
-\begin{frame}[fragile]{NETLINK}
+\begin{frame}[fragile]{Netlink}
 	\begin{figure}[t!]
 	\includegraphics[scale=0.4]{img/netlink_comunication}
 	\caption{netlink}
@@ -178,9 +193,15 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
  %%TODO magari dividere in due colonne e a dx mettere i listings...
 \end{frame}
 
-\begin{frame}[fragile]{FLUSSO}
+\begin{frame}[fragile]{Flusso}
  \begin{itemize}
    \setlength\itemsep{2em}
+	 \item Pre-VSNLib:
+	 \vspace{0.5em}
+			\begin{itemize}
+			\setlength\itemsep{0.5em}
+			\item Cattura della system call (sendto)
+			\end{itemize}
      \item Sequenza:
      \vspace{0.5em}
         \begin{itemize}
@@ -196,21 +217,21 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
  \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{CORE}
+\begin{frame}[fragile]{Core}
 	\begin{itemize}
-			\item Inizializza la libreria caricando il modulo per lo stack in uso;
-			\item ``Handle'' per il passaggio del pacchetto netlink;
-			\item Decode del pacchetto;
-			\item Chiamata alla funzione del modulo per l'azione richiesta;
+			\item Inizializza la libreria caricando il modulo per lo stack in uso;\newline
+			\item ``Handle'' per il passaggio del pacchetto netlink;\newline
+			\item Decode del pacchetto;\newline
+			\item Chiamata alla funzione del modulo per l'azione richiesta;\newline
 			\item Creazione del netlink di risposta.
 
 	\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{MODULI}
+\begin{frame}[fragile]{Moduli}
 	\begin{itemize}
-      \item Stessa struttura;
-      \item Strato di compatibilit\`a con le funzioni particolari degli stack;
+      \item Stessa struttura;\newline
+      \item Strato di compatibilit\`a con le funzioni particolari degli stack;\newline
       \item Possibilit\`a di creare nuovi moduli per aumentare la compatibilit\`a con altri stack.
 
   \end{itemize}
@@ -218,8 +239,8 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
 
 \begin{frame}[fragile]{Test}
 	\begin{itemize}
-\item Il test \`e un client netcat il cui stack \`e stato configurato tramite un pacchetto netlink.\\
-\item Sono visibili i feedback di risposta e la corretta configurazione dello stack \`e dimostrata dal fatto che il client riesce a comunicare con il server
+\item Il test \`e un client netcat il cui stack \`e stato configurato tramite un pacchetto netlink;\\
+\item Sono visibili i feedback di risposta e la corretta configurazione dello stack \`e dimostrata dal fatto che il client riesce a comunicare con il server.
 \end{itemize}
 \begin{figure}[t!]
 \includegraphics[scale=0.28]{img/test6_b}
@@ -229,8 +250,8 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
 
 \begin{frame}[fragile]{Conclusioni}
  \begin{itemize}
-     \item I test effetuati indicano la riuscita della configurazione;
-     \item VSNLib \`e ancora un prototipo ma i risultati sono incoraggianti;
+     \item I test effetuati indicano la riuscita della configurazione;\newline
+     \item VSNLib \`e ancora un prototipo ma i risultati sono incoraggianti;\newline
      \item L'obiettivo finale \`e quello di avere una libreria completa e trasparente.
  \end{itemize}
 \end{frame}
@@ -238,8 +259,8 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
 
 \begin{frame}[fragile]{Sviluppi Futuri}
  \begin{itemize}
-	 	\item Aumento compatibilit\`a con gli stack esistenti, controllo e testing;
-		\item Sviluppo di moduli per eventuali nuovi stack;
+	 	\item Aumento compatibilit\`a con gli stack esistenti, controllo e testing;\newline
+		\item Sviluppo di moduli per eventuali nuovi stack;\newline
      \item Package Filtering: configurazione attraverso iptables.
  \end{itemize}
 \end{frame}
@@ -249,48 +270,35 @@ Le porte utilizzate per la comunicazione sono create in funzione dei Process ID.
 
 \begin{center}
 \LARGE Grazie per l'attenzione\\
-\vspace{1em}
-
-Domande?
 \end{center}
 \end{frame}
 
-\begin{frame}[plain, noframenumbering]{Approfondimento: Limitazioni dei proiettori wireless}
+%\begin{frame}[plain, noframenumbering]{Approfondimento:}
 
-Riguardano:\newline
+%\newline
 
-\begin{itemize}
+%\begin{itemize}
 
-\item La tipologia di file trasmessi, con la mancanza di supporto video o risultati non soddisfacenti nella riproduzione
-\item Le modalità di connessione, quando il servizio non è integrato in una rete esistente ma è richiesta la creazione di una rete ad hoc
-\item Hardware aggiuntivo (es. adattatori USB) necessario per il funzionamento
-\item I costi elevati, con differenze tra proiettori con WiFi built-in e proiettori tradizionali potenziati da adattatori wireless.
 
-\end{itemize}
-\end{frame}
+%\end{itemize}
+%\end{frame}
 
 
 
-\begin{frame}[plain, noframenumbering]{Approfondimento: File system e UnionFS}
+%\begin{frame}[plain, noframenumbering]{Approfondimento:}
 
-\begin{itemize}
-\item Tipo di file system che supporta union mount
-\item È utilizzato per sovrapporre ad un sistema in sola lettura, un file system temporaneo memorizzato in RAM
-\item Di conseguenza ogni scrittura avviene in RAM e verrà persa ad ogni riavvio, evitando potenziali scritture dannose su memoria SD.
-\end{itemize}
-\end{frame}
+%\begin{itemize}
+%\end{itemize}
+%\end{frame}
 
-\begin{frame}[plain, noframenumbering]{Approfondimento: Piremote}
+%\begin{frame}[plain, noframenumbering]{Approfondimento: }
 
-\begin{itemize}
+%\begin{itemize}
 
-\item Realizzato in Python, Javascript per il frontend
-\item È basato su un modulo che consente il controllo completo di mouse e tastiera
-\item Piremote può essere eseguito da riga di comando eventualmente specificando i parametri \textit{address}, \textit{port}, \textit{key}.
+%\end{itemize}
 
-\end{itemize}
+%\end{frame}
 
-\end{frame}
 
 
 
